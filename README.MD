@@ -46,7 +46,7 @@ instrument=orno.orno('/dev/ttyUSB0', slave_id=10, useMQTT=False)
 instrument.query()
 instrument.print()
 ```
-######## Result
+###### Result
 ```
 L1 Voltage       229.37 V
 L1 Frequency     50.03 Hz
