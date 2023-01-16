@@ -18,6 +18,7 @@ instrument.polling_interval  = 10
 
 instrument.doLoop()
 ```
+![Result](iobroker_mqtt_results.png)
 
 ##### Sample query with count (100 times every 10 seconds) and sending to MQTT Broker
 
