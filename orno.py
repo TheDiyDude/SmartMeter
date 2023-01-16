@@ -7,7 +7,7 @@
 # Current support:
 #  Single Phase Meter OR-WE-514
 #
-# Author: marc-O-blumenauer@kobuleti.de
+# Author: Marc.Oliver.Blumenauer@kobuleti.de
 #
 # License: MIT
 #
