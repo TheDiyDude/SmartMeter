@@ -1,15 +1,15 @@
 #
 # ORNO SmartMeter Class 
 #
-# This class helps to communicate with an ORNO smart meter. It is possible to send
-# results to MQTT topics. 
+# This class helps to communicate with an ORNO smart meter via RS-485 ModBus protocol. 
+# It is possible to send results to MQTT topic.
 #
 # Current support:
 #  Single Phase Meter OR-WE-514
 #
 # Author: marc-O-blumenauer@kobuleti.de
 #
-# License: GPL V2 
+# License: MIT
 #
 import minimalmodbus
 import serial
