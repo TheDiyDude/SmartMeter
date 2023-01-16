@@ -46,3 +46,14 @@ instrument=orno.orno('/dev/ttyUSB0', slave_id=10, useMQTT=False)
 instrument.query()
 instrument.print()
 ```
+
+> >>> import orno
+> >>> instrument=orno.orno('/dev/ttyAMA0',useMQTT=True)
+> >>> instrument.query()
+> >>> instrument.print()
+> L1 Voltage       229.37 V
+> L1 Frequency     50.03 Hz
+> L1 Current       0.030 A
+> L1 Power         6.881 W
+> L1 Power Factor  0.125
+> >>> 
