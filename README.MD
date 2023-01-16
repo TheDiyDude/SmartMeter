@@ -3,7 +3,7 @@
 
 ##### Sample infinite loop and sending to MQTT Broker
 
-'''
+```
 import orno
 
 instrument=orno.orno('/dev/ttyAMA0',useMQTT=True)
@@ -17,4 +17,4 @@ instrument.debug             = False
 instrument.polling_interval  = 10
 
 instrument.doLoop()
-'''
+```
