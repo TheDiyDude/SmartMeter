@@ -38,6 +38,8 @@ instrument.polling_interval  = 10
 instrument.doLoop(count=100)
 ```
 
+![Result](Bildschirmfoto%202023-01-15%20um%2022.01.34.png)
+
 ##### Sample to check connection and print results
 
 ```
