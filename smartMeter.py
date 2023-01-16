@@ -8,7 +8,7 @@ instrument.mqtt_broker       = 'mother'
 instrument.mqtt_port         = 1886
 instrument.mqtt_username     = 'Broki'
 instrument.mqtt_password     = '!2022!Broki!'
-instrument.mqtt_topic        = 'SmartMeter/TEST'
+instrument.mqtt_topic        = 'SmartMeter/ORNO/WE-514'
 instrument.debug             = False
 instrument.polling_interval  = 10
 
