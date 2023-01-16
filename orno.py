@@ -14,8 +14,8 @@
 import minimalmodbus
 import serial
 import time
-from paho.mqtt import client as mqtt_client
 import random
+from paho.mqtt import client as mqtt_client
 
 class orno:
   def __init__(self, port, slave_id=1, useMQTT=False):
