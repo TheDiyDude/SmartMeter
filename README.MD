@@ -10,19 +10,18 @@ pip3 install paho-mqtt
 ```
 
 ###### Beschreibung der Methoden (Parameter)
-> class orno(port, slave_id, useMQTT)
->
+> orno.orno(port, slave_id, useMQTT)
 ```
-> port\t\tSerial Device like COM4 or /dev/ttyUSB0
->
-> slave_id\tThe ID of the Modbus Device to communicate to
->
-> useMQTT\tTrue or False, if True it is necessary to set MQTT communication parameters
-> \t\t\tmqtt_broker\tIP address or hostname of MQTT server
-> \t\t\tmqtt_port\tthe port of the MQTT broker
-> \t\t\tmqtt_topic\tthe main topic where the ORNO objects L1_volage etc being published
-> \t\t\tmqtt_username\tthe username for MQTT broker authentication
-> \t\t\tmqtt_password\tthe password for MQTT broker authentication
+port        Serial Device like COM4 or /dev/ttyUSB0
+
+slave_id    The ID of the Modbus Device to communicate to
+
+useMQTT     True or False, if True it is necessary to set MQTT communication parameters
+            mqtt_broker     IP address or hostname of MQTT server
+            mqtt_port       the port of the MQTT broker
+            mqtt_topic      the main topic where the ORNO objects L1_volage etc being published
+            mqtt_username   the username for MQTT broker authentication
+            mqtt_password   the password for MQTT broker authentication
 ```
 
 > Aufbau Hardware (Raspberry Pi, RS-485 Modul, Kabel, Anschluss)
