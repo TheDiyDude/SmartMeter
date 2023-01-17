@@ -10,6 +10,10 @@
 ![Result](media/iobroker_MQTT_Topic.PNG)
 ![Result](media/HABPanel_SmartMeter1.PNG)
 
+> I used a RS-485 modul and build an easy RS-485 hat to my Raspberry Pi 1. 
+> Important note: connect Pi Pin TX to Module TX and Pi RX to Module RX (that might change in these modules later as it is confusing)
+![Raspberry Pi RS-485 Hat](media/raspPi1_Rs-485_Head.jpg)
+
 > Required packages
 ```
 Install the required packages if not already installed:
