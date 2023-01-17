@@ -9,8 +9,8 @@ pip3 install random
 pip3 install paho-mqtt
 ```
 
-###### Beschreibung der Methoden (Parameter)
-> orno.orno(port, slave_id, useMQTT)
+#### Beschreibung der Methoden (Parameter)
+> orno.orno(port, slave_id=1, useMQTT=False)
 ```
 port        Serial Device like COM4 or /dev/ttyUSB0
 
