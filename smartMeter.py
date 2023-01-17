@@ -1,5 +1,20 @@
 #!/usr/bin/python
-
+#
+# ORNO SmartMeter Sample 
+#
+# This class helps to communicate with an ORNO smart meter via RS-485 ModBus protocol. 
+# It is possible to send results to MQTT topic.
+#
+# See REAME.MD for more information and hardware setup.
+#
+# Current support:
+#  Single Phase Meter OR-WE-514
+#
+# Author: Marc-Oliver Blumenauer 
+#         marc@l3c.de
+#
+# License: MIT
+#
 import orno
 
 instrument=orno.orno('/dev/ttyAMA0',useMQTT=True)
