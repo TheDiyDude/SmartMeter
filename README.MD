@@ -64,7 +64,7 @@ Publishes the last retrieved data from instrument.query() to the MQTT broker.
 
 > Sample hardware (Raspberry Pi, RS-485 Module, Wiring, Connection)
 
-##### Samples 
+### Samples 
 
 > Sample infinite loop and sending to MQTT Broker
 
