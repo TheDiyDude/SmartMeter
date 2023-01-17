@@ -1,5 +1,5 @@
 
-# ORNO Class 
+# ORNO package 
 
 > With the orno python3 class it is very easy to communicate with the ORNO OR-WE-514 meter via RS-485 and ModBus RTU protocol. 
 > The intention was to make it very easy. Basically you need the class init with defaults and get going. The defaults should be
