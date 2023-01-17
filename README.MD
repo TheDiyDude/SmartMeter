@@ -143,3 +143,9 @@ L1 Power         6.881 W
 L1 Power Factor  0.125
 >>>
 ``` 
+
+>
+> Author: Marc-Oliver Blumenauer 
+>         marc@l3c.de
+
+### License: MIT
