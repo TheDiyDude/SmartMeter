@@ -1,15 +1,17 @@
 
 #### ORNO Class 
 
-> Installationschritte (Abhängigkeiten)
+> Required packages
 ```
+Install the required packages if not already installed:
+
 pip3 install minimalmodbus
 pip3 install pyserial
 pip3 install random
 pip3 install paho-mqtt
 ```
 
-#### Beschreibung der Methoden (Parameter)
+#### Available methods and parameters
 > instrument = orno.orno(port, slave_id=1, useMQTT=False)
 ```
 port        Serial Device like COM4 or /dev/ttyUSB0
@@ -60,9 +62,9 @@ Connects to the MQTT broker
 Publishes the last retrieved data from instrument.query() to the MQTT broker. 
 ```
 
-> Aufbau Hardware (Raspberry Pi, RS-485 Modul, Kabel, Anschluss)
+> Sample hardware (Raspberry Pi, RS-485 Module, Wiring, Connection)
 
-> Beispiele (siehe unten)
+> Samples 
 
 ##### Sample infinite loop and sending to MQTT Broker
 
