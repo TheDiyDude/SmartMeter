@@ -11,7 +11,12 @@
 ![Result](media/HABPanel_SmartMeter1.PNG)
 
 > I used a RS-485 modul and build an easy RS-485 hat to my Raspberry Pi 1. 
-> Important note: connect Pi Pin TX to Module TX and Pi RX to Module RX (that might change in these modules later as it is confusing)
+> Important note: connect Pi Pin TX to Module TX and Pi RX to Module RX 
+                  (that might change in these modules later as it is confusing)
+                  Connect Hat B- to OR-WE-514 Pin 25
+                  Connect Hat A+ to OR-WE-514 Pin 23
+                  Ground is not needed
+                  Do not forget to connect one of the two Neutral wires to your grid neutral, otherwise it will not work.
 ![Raspberry Pi RS-485 Hat](media/raspPi1_Rs-485_Head.jpg)
 
 > Required packages
