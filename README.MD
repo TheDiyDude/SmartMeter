@@ -64,9 +64,9 @@ Publishes the last retrieved data from instrument.query() to the MQTT broker.
 
 > Sample hardware (Raspberry Pi, RS-485 Module, Wiring, Connection)
 
-> Samples 
+##### Samples 
 
-##### Sample infinite loop and sending to MQTT Broker
+> Sample infinite loop and sending to MQTT Broker
 
 ```
 import orno
@@ -85,7 +85,7 @@ instrument.doLoop()
 ```
 ![Result](iobroker_mqtt_results.png)
 
-##### Sample query with count (100 times every 10 seconds) and sending to MQTT Broker
+> Sample query with count (100 times every 10 seconds) and sending to MQTT Broker
 
 ```
 import orno
@@ -105,7 +105,7 @@ instrument.doLoop(count=100)
 
 ![Result](Bildschirmfoto%202023-01-15%20um%2022.01.34.png)
 
-##### Sample to check connection and print results
+> Sample to check connection and print results
 
 ```
 import orno
@@ -114,7 +114,7 @@ instrument=orno.orno('/dev/ttyUSB0', slave_id=10, useMQTT=False)
 instrument.query()
 instrument.print()
 ```
-###### Result
+> Result
 ```
 L1 Voltage       229.37 V
 L1 Frequency     50.03 Hz
