@@ -9,9 +9,11 @@ pip3 install random
 pip3 install paho-mqtt
 ```
 
-> Beispiele (siehe unten)
-
 > Beschreibung der Methoden (Parameter)
+
+> Aufbau Hardware (Raspberry Pi, RS-485 Modul, Kabel, Anschluss)
+
+> Beispiele (siehe unten)
 
 ##### Sample infinite loop and sending to MQTT Broker
 
