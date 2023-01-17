@@ -17,11 +17,16 @@ port        Serial Device like COM4 or /dev/ttyUSB0
 slave_id    The ID of the Modbus Device to communicate to
 
 useMQTT     True or False, if True it is necessary to set MQTT communication parameters
-            mqtt_broker     IP address or hostname of MQTT server
-            mqtt_port       the port of the MQTT broker
-            mqtt_topic      the main topic where the ORNO objects L1_volage etc being published
-            mqtt_username   the username for MQTT broker authentication
-            mqtt_password   the password for MQTT broker authentication
+            mqtt_broker         IP address or hostname of MQTT server
+            mqtt_port           the port of the MQTT broker
+            mqtt_topic          the main topic where the ORNO objects L1_volage etc being published
+            mqtt_username       the username for MQTT broker authentication
+            mqtt_password       the password for MQTT broker authentication
+
+Other parameters
+            debug               True/False, for debug output
+            polling_interval    number in seconds between each query of the target device
+
 ```
 
 > instrument.query()
@@ -43,6 +48,16 @@ If MQTT is used the gathered information is sent to the MQTT broker.
 
 count       (int)  set the number of queries if set greater than 0, otherwise infinte query.
 infinite    (bool) True/False - do infinite query or not
+```
+
+> instrument.mqtt_enable()
+```
+Connects to the MQTT broker   
+```
+
+> instrument.mqtt_publish()
+```
+Publishes the last retrieved data from instrument.query() to the MQTT broker. 
 ```
 
 > Aufbau Hardware (Raspberry Pi, RS-485 Modul, Kabel, Anschluss)
