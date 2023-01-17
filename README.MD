@@ -1,5 +1,5 @@
 
-#### ORNO Class 
+# ORNO Class 
 
 > Required packages
 ```
@@ -11,7 +11,7 @@ pip3 install random
 pip3 install paho-mqtt
 ```
 
-#### Available methods and parameters
+### Available methods and parameters
 > instrument = orno.orno(port, slave_id=1, useMQTT=False)
 ```
 port        Serial Device like COM4 or /dev/ttyUSB0
