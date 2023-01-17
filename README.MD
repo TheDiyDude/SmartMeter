@@ -1,6 +1,18 @@
 
 #### ORNO Class 
 
+> Installationschritte (Abhängigkeiten)
+```
+pip3 install minimalmodbus
+pip3 install pyserial
+pip3 install random
+pip3 install paho-mqtt
+```
+
+> Beispiele (siehe unten)
+
+> Beschreibung der Methoden (Parameter)
+
 ##### Sample infinite loop and sending to MQTT Broker
 
 ```
