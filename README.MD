@@ -10,7 +10,7 @@ pip3 install paho-mqtt
 ```
 
 #### Beschreibung der Methoden (Parameter)
-> orno.orno(port, slave_id=1, useMQTT=False)
+> instrument = orno.orno(port, slave_id=1, useMQTT=False)
 ```
 port        Serial Device like COM4 or /dev/ttyUSB0
 
@@ -22,6 +22,27 @@ useMQTT     True or False, if True it is necessary to set MQTT communication par
             mqtt_topic      the main topic where the ORNO objects L1_volage etc being published
             mqtt_username   the username for MQTT broker authentication
             mqtt_password   the password for MQTT broker authentication
+```
+
+> instrument.query()
+```
+This method will gather L1 Voltage, L1 Current, L1 Power, L1 PowerFactor, L1 Frequence.
+The communication is done one time.
+```
+
+> instrument.print()
+```
+The method will output L1 Voltage, L1 Current, L1 Power, L1 PowerFactor, L1 Frequence.
+The method instrument.query() must be executed before.
+```
+
+> instrument.doLoop(count=0,initite=True)
+```
+Without any given parameters the method will do a query every polling_interval seconds initinite. 
+If MQTT is used the gathered information is sent to the MQTT broker.
+
+count       (int)  set the number of queries if set greater than 0, otherwise infinte query.
+infinite    (bool) True/False - do infinite query or not
 ```
 
 > Aufbau Hardware (Raspberry Pi, RS-485 Modul, Kabel, Anschluss)
