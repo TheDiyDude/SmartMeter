@@ -51,10 +51,26 @@ Other parameters
 
 ```
 
-> instrument.query()
+> value = instrument.query(register=0, decimals=2)
 ```
-This method will gather L1 Voltage, L1 Current, L1 Power, L1 PowerFactor, L1 Frequence.
+This method will gather L1 Voltage, L1 Current, L1 Power, L1 Active Power, L1 Reactive Power, L1 Apparent Power, 
+L1 PowerFactor, L1 Frequency and Total Power.
 The communication is done one time.
+
+To query single register use a known value for register and its decimals or use predefined register variables:
+orno.L1_Frequency     
+orno.L1_Voltage       
+orno.L1_Current       
+orno.L1_Power         
+orno.L1_PF            
+orno.L1_ActivePower   
+orno.L1_ReactivePower 
+orno.L1_ApparentPower 
+orno.TotalPower   
+
+Sample
+TotalPower = instrument.query(orno.TotalPower,3)
+
 ```
 
 > instrument.print()
@@ -143,6 +159,36 @@ L1 Power         6.881 W
 L1 Power Factor  0.125
 >>>
 ``` 
+
+> Sample to query custom registers
+```
+import orno
+
+instrument=orno.orno('/dev/ttyAMA0')
+
+Voltage = instrument.query(orno.L1_Voltage,2)
+Power   = instrument.query(orno.L1_Power,3)
+APower  = instrument.query(orno.L1_ActivePower,3)
+RPower  = instrument.query(orno.L1_ReactivePower,3)
+ApPower = instrument.query(orno.L1_ApparentPower,3)
+SumPower= instrument.query(orno.TotalPower,3)
+
+print(f"L1 Voltage       : {Voltage} V")
+print(f"L1 Power         : {Power} W")
+print(f"L1 Active Power  : {APower} kW")
+print(f"L1 Reactive Power: {RPower} kvar")
+print(f"L1 Apparent Power: {ApPower} kva")
+print(f"Total Power      : {SumPower} kWh")
+```
+> Result
+```
+L1 Voltage       : 228.27 V
+L1 Power         : 6.8481 W
+L1 Active Power  : 0 kW
+L1 Reactive Power: 0.007 kvar
+L1 Apparent Power: 0.007 kva
+Total Power      : 0.023 kWh
+```
 
 >
 > Author: Marc-Oliver Blumenauer 
