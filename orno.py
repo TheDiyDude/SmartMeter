@@ -115,10 +115,8 @@ class orno:
   def doLoop(self, count=0, infinite=True):
     if self.useMQTT and not self.isMQTT_connected:
       self.mqtt_enable()
-      if self.debug:
-        print(f"Enabling MQTT connection: {self.isMQTT_connected}")
-    if self.debug:
-      print(f"Start polling every {self.polling_interval} seconds slave id '{self.slave_id}'")
+      self.logMessage(f"Enabling MQTT connection: {self.isMQTT_connected}")
+    self.logMessage(f"Start polling every {self.polling_interval} seconds slave id '{self.slave_id}'")
     if infinite and count < 1:
       while True:
         self.query()
@@ -143,9 +141,8 @@ class orno:
     self.L1ApP= f"{self.mqtt_topic}/L1_ApparentPower"
     self.L1PF = f"{self.mqtt_topic}/L1_PF"
     self.TP   = f"{self.mqtt_topic}/TotalPower"
-    if self.debug:
-      print(f"Using MQTT Broker: '{self.mqtt_broker}:{self.mqtt_port}' with user '{self.mqtt_username}' and secret '{self.mqtt_password}'")
-      print(f"Using MQTT Topic : '{self.mqtt_topic}'")
+    self.logMessage(f"Using MQTT Broker: '{self.mqtt_broker}:{self.mqtt_port}' with user '{self.mqtt_username}' and secret '{self.mqtt_password}'")
+    self.logMessage(f"Using MQTT Topic : '{self.mqtt_topic}'")
     try:
       self.mqtt=self.mqtt_connect()
       self.isMQTT_connected = True
@@ -168,13 +165,14 @@ class orno:
     except Exception as err:
       print(f"Unexpected {err=}, {type(err)=}")
       print(f"Current Retry Count is {self.mqtt_connect_retry_count}")
+      self.logMessage(f"Unexpected {err=}, {type(err)=}")
 
   def mqtt_on_connect(self, client, userdata, flags, rc):
     if rc == 0:
-      print("ORNO/MQTT: Connected to MQTT Broker!")
+      self.logMessage("ORNO/MQTT: Connected to MQTT Broker!")
       client.connected_flag=True
     else:
-      print("ORNO/MQTT: Failed to connect, return code %d\n", rc)
+      self.logMessage("ORNO/MQTT: Failed to connect, return code %d\n", rc)
       client.bad_connection_flag=True
 
   def mqtt_connect(self):
@@ -187,5 +185,5 @@ class orno:
       #print(f"client_bad_connection_flag: {self.client.bad_connection_flag}")
     except Exception as err:
       print(f"Unexpected {err=}, {type(err)=}")
-      print(f"Current Retry Count is {self.mqtt_connect_retry_count}")
+      self.logMessage(f"Unexpected {err=}, {type(err)=}")
     return self.client
