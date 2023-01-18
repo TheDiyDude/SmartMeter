@@ -187,6 +187,7 @@ class orno:
       self.client.connect(self.mqtt_broker, self.mqtt_port)
       #print(f"client_bad_connection_flag: {self.client.bad_connection_flag}")
     except Exception as err:
-      print(f"Unexpected {err=}, {type(err)=}")
-      self.logMessage(f"Unexpected {err=}, {type(err)=}")
+      if self.debug: 
+        print(f"Unexpected {err=}, {type(err)=}")
+        self.logMessage(f"Unexpected {err=}, {type(err)=}")
     return self.client
