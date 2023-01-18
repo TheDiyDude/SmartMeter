@@ -58,7 +58,7 @@ class orno:
     if self.log:
       try:
         self.logFH = open(self.logFile,"w")
-        self.logFH.write(datetime.now().strftime("%Y%m%d %H:%M:%S>> ORNO Init - Startup."))
+        self.logFH.writelines(datetime.now().strftime("%Y%m%d %H:%M:%S>> ORNO Init - Startup."))
       except IOError as ioError:
         print(f"ORNO Error: Cannot create logfile: {ioError}")
 
