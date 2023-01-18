@@ -33,7 +33,7 @@ class orno:
   def __init__(self, port, slave_id=1, useMQTT=False, log=True):
     self.debug = False
     self.log = log
-    self.logFile = datetime.now().strftime("{os.path.basename(__file__)}-%Y%m%d%H%M%S.log")
+    self.logFile = datetime.now().strftime(f"{os.path.basename(__file__)}-%Y%m%d%H%M%S.log")
     self.port = port
     self.slave_id = slave_id
     self.polling_interval = 5
