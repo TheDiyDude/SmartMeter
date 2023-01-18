@@ -69,7 +69,7 @@ class orno:
       try:
         self.txt = datetime.now().strftime("%Y%m%d %H:%M:%S>> ")+ f"{message}\n"
         self.logFH.write(self.txt)
-        os.fsync()
+        os.fsync(self.logFH)
       except IOError as ioError:
         print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
