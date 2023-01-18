@@ -142,8 +142,9 @@ class orno:
     self.L1ApP= f"{self.mqtt_topic}/L1_ApparentPower"
     self.L1PF = f"{self.mqtt_topic}/L1_PF"
     self.TP   = f"{self.mqtt_topic}/TotalPower"
-    self.logMessage(f"Using MQTT Broker: '{self.mqtt_broker}:{self.mqtt_port}' with user '{self.mqtt_username}' and secret '{self.mqtt_password}'")
-    self.logMessage(f"Using MQTT Topic : '{self.mqtt_topic}'")
+    if self.debug:
+      self.logMessage(f"Using MQTT Broker: '{self.mqtt_broker}:{self.mqtt_port}' with user '{self.mqtt_username}' and secret '{self.mqtt_password}'")
+      self.logMessage(f"Using MQTT Topic : '{self.mqtt_topic}'")
     try:
       self.mqtt=self.mqtt_connect()
       self.isMQTT_connected = True
