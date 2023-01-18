@@ -118,22 +118,18 @@ class orno:
       self.logMessage(f"Enabling MQTT connection: {self.isMQTT_connected}")
     if self.debug:
       self.logMessage(f"Start polling every {self.polling_interval} seconds slave id '{self.slave_id}'")
-    try:  
-      if infinite and count < 1:
-        while True:
-          self.query()
-          if self.useMQTT:
-            self.mqtt_publish()
-          time.sleep(self.polling_interval)
-      else:
-        for i in range(0,count):
-          self.query()
-          if self.useMQTT:
-            self.mqtt_publish()
-          time.sleep(self.polling_interval)
-    except:
-      time.sleep(self.polling_interval)
-
+    if infinite and count < 1:
+      while True:
+        self.query()
+        if self.useMQTT:
+          self.mqtt_publish()
+        time.sleep(self.polling_interval)
+    else:
+      for i in range(0,count):
+        self.query()
+        if self.useMQTT:
+           self.mqtt_publish()
+         time.sleep(self.polling_interval)
 
   def mqtt_enable(self):
     self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
@@ -169,9 +165,10 @@ class orno:
       self.client.publish(self.L1PF, f"{self.L1_PF}")
       self.client.publish(self.TP, f"{self.TotalPower}")
     except Exception as err:
-      print(f"Unexpected {err=}, {type(err)=}")
-      print(f"Current Retry Count is {self.mqtt_connect_retry_count}")
-      self.logMessage(f"Unexpected {err=}, {type(err)=}")
+      if self.debug:
+        print(f"Unexpected {err=}, {type(err)=}")
+        print(f"Current Retry Count is {self.mqtt_connect_retry_count}")
+        self.logMessage(f"Unexpected {err=}, {type(err)=}")
 
   def mqtt_on_connect(self, client, userdata, flags, rc):
     if rc == 0:
