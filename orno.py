@@ -17,6 +17,7 @@ import serial
 import time
 import random
 from paho.mqtt import client as mqtt_client
+from datetime import datetime, date, time, timezone
 
 L1_Frequency     = 304
 L1_Voltage       = 305
@@ -29,8 +30,10 @@ L1_ApparentPower = 337  # 3 decimals kva
 TotalPower       = 40961 # 2 decimals kWh
 
 class orno:
-  def __init__(self, port, slave_id=1, useMQTT=False):
+  def __init__(self, port, slave_id=1, useMQTT=False, log=True):
     self.debug = False
+    self.log = log
+    self.logFile = datetime.now().strftime("orno-%Y%m%d%H%M%S.log")
     self.port = port
     self.slave_id = slave_id
     self.polling_interval = 5
@@ -52,6 +55,12 @@ class orno:
       self.mqtt_username='USERNAME'
       self.mqtt_password='PASSWORD'
       self.mqtt_connect_retry_count = 30
+    if self.log:
+      try:
+        self.logFH = open(self.logFile,"w")
+        self.logFH.write(datetime.now().strftime("%Y%m%d %H:%M:%S>> ORNO Init - Startup."))
+      except IOError as ioError:
+        print(f"ORNO Error: Cannot create logfile: {ioError}")
 
   def query(self, register=0, decimals=2):
     if register == 0:
