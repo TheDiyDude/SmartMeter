@@ -27,4 +27,8 @@ instrument.mqtt_topic        = 'SmartMeter/ORNO/WE-514'
 instrument.debug             = False
 instrument.polling_interval  = 10
 
-instrument.doLoop()
+while True:
+  try:
+    instrument.doLoop()
+  except:
+    instrument.mqtt_enable()
