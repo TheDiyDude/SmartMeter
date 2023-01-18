@@ -18,6 +18,16 @@ import time
 import random
 from paho.mqtt import client as mqtt_client
 
+L1_Frequency     = 304
+L1_Voltage       = 305
+L1_Current       = 314
+L1_Power         = -1
+L1_PF            = 344
+L1_ActivePower   = 321  # 3 decimals kvar
+L1_ReactivePower = 329  # 3 decimals kvar
+L1_ApparentPower = 337  # 3 decimals kva
+TotalPower       = 40961 # 2 decimals kWh
+
 class orno:
   def __init__(self, port, slave_id=1, useMQTT=False):
     self.debug = False
@@ -43,25 +53,46 @@ class orno:
       self.mqtt_password='PASSWORD'
       self.mqtt_connect_retry_count = 30
 
-  def query(self):
-    self.L1_frequency = self.smartmeter.read_register(304,2,3)
-    self.L1_voltage   = self.smartmeter.read_register(305,2,3)
-    self.L1_current   = self.smartmeter.read_register(314,3,3)
-    #self.L1_power     = self.smartmeter.read_register(321,3,3)
-    self.L1_power     = self.L1_voltage * self.L1_current
-    self.L1_PF        = self.smartmeter.read_register(344,3,3)
+  def query(self, register=0, decimals=2):
+    if register == 0:
+      self.L1_frequency = self.smartmeter.read_register(L1_Frequency,2,3)
+      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage,2,3)
+      self.L1_current   = self.smartmeter.read_register(L1_Current,3,3)
+      #self.L1_power     = self.smartmeter.read_register(L1_Power,3,3)
+      self.L1_power     = self.L1_voltage * self.L1_current
+      self.L1_PF        = self.smartmeter.read_register(L1_PF,3,3)
+      self.TotalPower   = self.smartmeter.read_register(TotalPower,3,3)
+      self.L1_APower    = self.smartmeter.read_register(L1_ActivePower,3,3)
+      self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower,3,3)
+      self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower,3,3)
+    elif register == -1:
+      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage,2,3)
+      self.L1_current   = self.smartmeter.read_register(L1_Current,3,3)
+      self.L1_power     = self.L1_voltage * self.L1_current
+      return self.L1_power
+    else:
+      return self.smartmeter.read_register(register,decimals,3)
+
 
   def print(self):
-    self.txt = "L1 Voltage       {U:.2f} V"
+    self.txt = "L1 Voltage        {U:.2f} V"
     print(self.txt.format(U=self.L1_voltage))
-    self.txt = "L1 Frequency     {F:.2f} Hz"
+    self.txt = "L1 Frequency      {F:.2f} Hz"
     print(self.txt.format(F=self.L1_frequency))
-    self.txt = "L1 Current       {I:.3f} A"
+    self.txt = "L1 Current        {I:.3f} A"
     print(self.txt.format(I=self.L1_current))
-    self.txt = "L1 Power         {P:.3f} W"
+    self.txt = "L1 Power          {P:.3f} W"
     print(self.txt.format(P=self.L1_power))
-    self.txt = "L1 Power Factor  {PF:.3f}"
+    self.txt = "L1 Active Power   {AP:.3f} kW"
+    print(self.txt.format(AP=self.L1_APower))
+    self.txt = "L1 Reactive Power {RP:.3f} kvar"
+    print(self.txt.format(RP=self.L1_RPower))
+    self.txt = "L1 Apparent Power {ApP:.3f} kva"
+    print(self.txt.format(ApP=self.L1_ApPower))
+    self.txt = "L1 Power Factor   {PF:.3f}"
     print(self.txt.format(PF=self.L1_PF))
+    self.txt = "Total Power       {TP:.3f} kWh"
+    print(self.txt.format(TP=self.TotalPower))
 
   def doLoop(self, count=0, infinite=True):
     if self.useMQTT and not self.isMQTT_connected:
@@ -89,7 +120,11 @@ class orno:
     self.L1F  = f"{self.mqtt_topic}/L1_Frequency"
     self.L1I  = f"{self.mqtt_topic}/L1_Current"
     self.L1P  = f"{self.mqtt_topic}/L1_Power"
+    self.L1AP = f"{self.mqtt_topic}/L1_ActivePower"
+    self.L1RP = f"{self.mqtt_topic}/L1_ReactivePower"
+    self.L1ApP= f"{self.mqtt_topic}/L1_ApparentPower"
     self.L1PF = f"{self.mqtt_topic}/L1_PF"
+    self.TP   = f"{self.mqtt_topic}/TotalPower"
     if self.debug:
       print(f"Using MQTT Broker: '{self.mqtt_broker}:{self.mqtt_port}' with user '{self.mqtt_username}' and secret '{self.mqtt_password}'")
       print(f"Using MQTT Topic : '{self.mqtt_topic}'")
@@ -106,7 +141,11 @@ class orno:
       self.client.publish(self.L1F, f"{self.L1_frequency}")
       self.client.publish(self.L1I, f"{self.L1_current}")
       self.client.publish(self.L1P, f"{self.L1_power}")
+      self.client.publish(self.L1AP, f"{self.L1_APower}")
+      self.client.publish(self.L1RP, f"{self.L1_RPower}")
+      self.client.publish(self.L1ApP, f"{self.L1_ApPower}")
       self.client.publish(self.L1PF, f"{self.L1_PF}")
+      self.client.publish(self.TP, f"{self.TotalPower}")
     except Exception as err:
       print(f"Unexpected {err=}, {type(err)=}")
       print(f"Current Retry Count is {self.mqtt_connect_retry_count}")
