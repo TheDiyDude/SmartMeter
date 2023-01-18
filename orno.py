@@ -129,7 +129,7 @@ class orno:
         self.query()
         if self.useMQTT:
            self.mqtt_publish()
-         time.sleep(self.polling_interval)
+        time.sleep(self.polling_interval)
 
   def mqtt_enable(self):
     self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
