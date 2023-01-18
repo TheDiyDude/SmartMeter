@@ -16,6 +16,7 @@ import minimalmodbus
 import serial
 import time
 import random
+import os
 from paho.mqtt import client as mqtt_client
 from datetime import datetime, date, time, timezone
 
