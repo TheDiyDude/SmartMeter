@@ -66,7 +66,7 @@ class orno:
 
   def logMessage(self,message):
     try:
-      self.logFH.write(datetime.now().strftime("%Y%m%d %H:%M:%S>> {message}}\n"))
+      self.logFH.write(datetime.now().strftime(f"%Y%m%d %H:%M:%S>> {message}}\n"))
     except IOError as ioError:
       print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
