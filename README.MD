@@ -32,7 +32,7 @@ pip3 install paho-mqtt
 ```
 
 ### Available methods and parameters
-> instrument = orno.orno(port, slave_id=1, useMQTT=False)
+> instrument = orno.orno(port, slave_id=1, useMQTT=False, log=True)
 ```
 port        Serial Device like COM4 or /dev/ttyUSB0
 
@@ -44,6 +44,9 @@ useMQTT     True or False, if True it is necessary to set MQTT communication par
             mqtt_topic          the main topic where the ORNO objects L1_volage etc being published
             mqtt_username       the username for MQTT broker authentication
             mqtt_password       the password for MQTT broker authentication
+
+log         True/False
+            Writes out a logfile in current execution folder. Setting degub=True makes it more verbose.
 
 Other parameters
             debug               True/False, for debug output
