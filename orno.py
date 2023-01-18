@@ -58,7 +58,7 @@ class orno:
       self.mqtt_connect_retry_count = 30
     if self.log:
       try:
-        self.logFH = open(self.logFile,"a",0)
+        self.logFH = open(self.logFile,"w")
         self.logMessage(f"ORNO Init - Startup.")
         self.logMessage(f"{self.smartmeter}")
       except IOError as ioError:
@@ -69,6 +69,7 @@ class orno:
       try:
         self.txt = datetime.now().strftime("%Y%m%d %H:%M:%S>> ")+ f"{message}\n"
         self.logFH.write(self.txt)
+        os.fsync()
       except IOError as ioError:
         print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
