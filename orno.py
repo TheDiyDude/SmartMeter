@@ -58,9 +58,17 @@ class orno:
     if self.log:
       try:
         self.logFH = open(self.logFile,"w")
-        self.logFH.write(datetime.now().strftime("%Y%m%d %H:%M:%S>> ORNO Init - Startup.\n"))
+        #self.logFH.write(datetime.now().strftime("%Y%m%d %H:%M:%S>> ORNO Init - Startup.\n"))
+        self.log(datetime.now().strftime("%Y%m%d %H:%M:%S>> ORNO Init - Startup.\n"))
+        self.log(f"{self.smartmeter}\n")
       except IOError as ioError:
         print(f"ORNO Error: Cannot create logfile: {ioError}")
+
+  def log(message):
+    try:
+      self.logFH.write(datetime.now().strftime("%Y%m%d %H:%M:%S>> {message}}\n"))
+    except IOError as ioError:
+      print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
   def query(self, register=0, decimals=2):
     if register == 0:
@@ -143,6 +151,7 @@ class orno:
     except Exception as err:
       print(f"Unexpected {err=}, {type(err)=}")
       print(f"Current Retry Count is {self.mqtt_connect_retry_count}")
+      self.log(f"Unexpected {err=}, {type(err)=}")
 
   def mqtt_publish(self):
     try:
