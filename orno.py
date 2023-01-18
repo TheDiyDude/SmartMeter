@@ -64,10 +64,10 @@ class orno:
       except IOError as ioError:
         print(f"ORNO Error: Cannot create logfile: {ioError}")
 
-  def logMessage(self,message):
+  def logMessage(self, message):
     try:
-      self.txt = datetime.now().strftime("%Y%m%d %H:%M:%S>> {M:%s}\n")
-      self.logFH.write(self.txt.format(M=message))
+      self.txt = datetime.now().strftime("%Y%m%d %H:%M:%S>> ")+ f"{message}\n"
+      self.logFH.write(self.txt)
     except IOError as ioError:
       print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
