@@ -60,7 +60,7 @@ class orno:
       try:
         self.logFH = open(self.logFile,"w")
         self.logMessage(f"ORNO Init - Startup.")
-        self.logMessage(f"{self.smartmeter}\n")
+        self.logMessage(f"{self.smartmeter}")
       except IOError as ioError:
         print(f"ORNO Error: Cannot create logfile: {ioError}")
 
