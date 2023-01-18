@@ -92,7 +92,6 @@ class orno:
     else:
       return self.smartmeter.read_register(register,decimals,3)
 
-
   def print(self):
     self.txt = "L1 Voltage        {U:.2f} V"
     print(self.txt.format(U=self.L1_voltage))
@@ -117,19 +116,24 @@ class orno:
     if self.useMQTT and not self.isMQTT_connected:
       self.mqtt_enable()
       self.logMessage(f"Enabling MQTT connection: {self.isMQTT_connected}")
-    self.logMessage(f"Start polling every {self.polling_interval} seconds slave id '{self.slave_id}'")
-    if infinite and count < 1:
-      while True:
-        self.query()
-        if self.useMQTT:
-          self.mqtt_publish()
-        time.sleep(self.polling_interval)
-    else:
-       for i in range(0,count):
-         self.query()
-         if self.useMQTT:
-           self.mqtt_publish()
-         time.sleep(self.polling_interval)
+    if self.debug:
+      self.logMessage(f"Start polling every {self.polling_interval} seconds slave id '{self.slave_id}'")
+    try:  
+      if infinite and count < 1:
+        while True:
+          self.query()
+          if self.useMQTT:
+            self.mqtt_publish()
+          time.sleep(self.polling_interval)
+      else:
+        for i in range(0,count):
+          self.query()
+          if self.useMQTT:
+            self.mqtt_publish()
+          time.sleep(self.polling_interval)
+    except:
+      print("doLoop()")
+
 
   def mqtt_enable(self):
     self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
