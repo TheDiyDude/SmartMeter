@@ -58,7 +58,6 @@ class orno:
     if self.log:
       try:
         self.logFH = open(self.logFile,"w")
-        #self.logFH.write(datetime.now().strftime("%Y%m%d %H:%M:%S>> ORNO Init - Startup.\n"))
         self.logMessage(f"ORNO Init - Startup.")
         self.logMessage(f"{self.smartmeter}\n")
       except IOError as ioError:
