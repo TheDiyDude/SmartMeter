@@ -65,11 +65,12 @@ class orno:
         print(f"ORNO Error: Cannot create logfile: {ioError}")
 
   def logMessage(self, message):
-    try:
-      self.txt = datetime.now().strftime("%Y%m%d %H:%M:%S>> ")+ f"{message}\n"
-      self.logFH.write(self.txt)
-    except IOError as ioError:
-      print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
+    if self.log:
+      try:
+        self.txt = datetime.now().strftime("%Y%m%d %H:%M:%S>> ")+ f"{message}\n"
+        self.logFH.write(self.txt)
+      except IOError as ioError:
+        print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
   def query(self, register=0, decimals=2):
     if register == 0:
