@@ -139,7 +139,11 @@ instrument.mqtt_topic        = 'SmartMeter/ORNO/WE-514'
 instrument.debug             = False
 instrument.polling_interval  = 10
 
-instrument.doLoop(count=100)
+while True:
+  try:
+    instrument.doLoop()
+  except:
+    instrument.mqtt_enable()
 ```
 
 ![Result](media/HABPanel_SmartMeter2.PNG)
