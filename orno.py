@@ -61,7 +61,7 @@ class orno:
       #self.L1_power     = self.smartmeter.read_register(L1_Power,3,3)
       self.L1_power     = self.L1_voltage * self.L1_current
       self.L1_PF        = self.smartmeter.read_register(L1_PF,3,3)
-      self.TotalPower   = self.smartmeter.read_register(TotalPower,3,3)
+      self.TotalPower   = self.smartmeter.read_register(TotalPower,2,3)
       self.L1_APower    = self.smartmeter.read_register(L1_ActivePower,3,3)
       self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower,3,3)
       self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower,3,3)
@@ -91,7 +91,7 @@ class orno:
     print(self.txt.format(ApP=self.L1_ApPower))
     self.txt = "L1 Power Factor   {PF:.3f}"
     print(self.txt.format(PF=self.L1_PF))
-    self.txt = "Total Power       {TP:.3f} kWh"
+    self.txt = "Total Power       {TP:.2f} kWh"
     print(self.txt.format(TP=self.TotalPower))
 
   def doLoop(self, count=0, infinite=True):
