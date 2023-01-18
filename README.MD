@@ -5,7 +5,7 @@
 > The intention was to make it very easy. Basically you need the class init with defaults and get going. The defaults should be
 > sufficient to communicate with the device. If you're going to use MQTT a view parameters for authentication and connection have
 > to be set and that's it. 
-![Result](media/Setup.PNG)
+![Result](media/Setup.png)
 >
 > Together with iobroker or similar software you can display the datapoints:
 ![Result](media/iobroker_MQTT_Topic.PNG)
