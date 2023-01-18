@@ -130,7 +130,7 @@ class orno:
         if self.useMQTT:
            self.mqtt_publish()
         t.sleep(self.polling_interval)
-
+ 
   def mqtt_enable(self):
     self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
     self.L1U  = f"{self.mqtt_topic}/L1_Voltage"
