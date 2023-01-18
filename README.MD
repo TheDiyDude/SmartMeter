@@ -171,16 +171,24 @@ Power   = instrument.query(orno.L1_Power,3)
 APower  = instrument.query(orno.L1_ActivePower,3)
 RPower  = instrument.query(orno.L1_ReactivePower,3)
 ApPower = instrument.query(orno.L1_ApparentPower,3)
-SumPower= instrument.query(orno.TotalPower,2)
+SumPower= instrument.query(orno.TotalPower,3)
 
-print(f"L1 Voltage       : {Voltage}")
-print(f"L1 Power         : {Power}")
-print(f"L1 Active Power  : {APower}")
-print(f"L1 Reactive Power: {RPower}")
-print(f"L1 Apparent Power: {ApPower}")
-print(f"Total Power: {SumPower}")
+print(f"L1 Voltage       : {Voltage} V")
+print(f"L1 Power         : {Power} W")
+print(f"L1 Active Power  : {APower} kW")
+print(f"L1 Reactive Power: {RPower} kvar")
+print(f"L1 Apparent Power: {ApPower} kva")
+print(f"Total Power      : {SumPower} kWh")
 ```
-
+> Result
+```
+L1 Voltage       : 228.27
+L1 Power         : 6.8481
+L1 Active Power  : 0
+L1 Reactive Power: 0.007
+L1 Apparent Power: 0.007
+Total Power      : 0.023
+```
 
 >
 > Author: Marc-Oliver Blumenauer 
