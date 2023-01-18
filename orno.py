@@ -14,11 +14,11 @@
 #
 import minimalmodbus
 import serial
-import time
+import time as t
 import random
 import os
 from paho.mqtt import client as mqtt_client
-from datetime import datetime, date, time, timezone
+from datetime import datetime
 
 L1_Frequency     = 304
 L1_Voltage       = 305
@@ -123,13 +123,13 @@ class orno:
         self.query()
         if self.useMQTT:
           self.mqtt_publish()
-        time.sleep(self.polling_interval)
+        t.sleep(self.polling_interval)
     else:
       for i in range(0,count):
         self.query()
         if self.useMQTT:
            self.mqtt_publish()
-        time.sleep(self.polling_interval)
+        t.sleep(self.polling_interval)
 
   def mqtt_enable(self):
     self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
