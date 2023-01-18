@@ -132,7 +132,7 @@ class orno:
             self.mqtt_publish()
           time.sleep(self.polling_interval)
     except:
-      pass
+      time.sleep(self.polling_interval)
 
 
   def mqtt_enable(self):
