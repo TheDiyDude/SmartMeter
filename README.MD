@@ -190,14 +190,7 @@ print(f"L1 Apparent Power: {ApPower} kva")
 print(f"Total Power      : {SumPower} kWh")
 ```
 > Result
-```
-L1 Voltage       : 228.27 V
-L1 Power         : 6.8481 W
-L1 Active Power  : 0 kW
-L1 Reactive Power: 0.007 kvar
-L1 Apparent Power: 0.007 kva
-Total Power      : 0.023 kWh
-```
+![Result](media/CustomRegistersAndLogging.png)
 
 >
 > Author: Marc-Oliver Blumenauer 
