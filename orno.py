@@ -186,7 +186,7 @@ class orno:
       self.logMessage(f"{buf}")
 
   def mqtt_connect(self):
-    self.client = mqtt_client.Client(self.mqtt_client_id, clean_session=False)
+    self.client = mqtt_client.Client(self.mqtt_client_id, clean_session=True)
     self.client.on_log = self.mqtt_on_log
     self.client.connected_flag=False 
     self.client.bad_connection_flag=False 
