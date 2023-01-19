@@ -167,6 +167,7 @@ class orno:
       else:
         self.logMessage(f"Publish Error: no connection")
         self.client.connect(self.mqtt_broker, self.mqtt_port)
+        self.client.loop(0.01)
     except Exception as err:
         self.logMessage(f"mqtt_publish() ERROR: {err}")
 
