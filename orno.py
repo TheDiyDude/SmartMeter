@@ -166,7 +166,7 @@ class orno:
         self.client.publish(self.TP, f"{self.TotalPower}")
       else:
         self.logMessage(f"Publish Error: no connection")
-        self.client.connect(self.mqtt_broker, self.mqtt_port, clean_session=True)
+        self.client.connect(self.mqtt_broker, self.mqtt_port)
     except Exception as err:
         self.logMessage(f"mqtt_publish() ERROR: {err}")
 
@@ -186,7 +186,7 @@ class orno:
       self.logMessage(f"{buf}")
 
   def mqtt_connect(self):
-    self.client = mqtt_client.Client(self.mqtt_client_id)
+    self.client = mqtt_client.Client(self.mqtt_client_id, clean_session=False)
     self.client.on_log = self.mqtt_on_log
     self.client.connected_flag=False 
     self.client.bad_connection_flag=False 
@@ -195,7 +195,7 @@ class orno:
     self.client.on_connect = self.mqtt_on_connect
     self.client.on_disconnect = self.mqtt_on_disconnect
     try:
-      self.client.connect(self.mqtt_broker, self.mqtt_port, clean_session=True)
+      self.client.connect(self.mqtt_broker, self.mqtt_port)
     except Exception as err:
         self.logMessage(f"mqtt_connect() ERROR: {err}")
     return self.client
