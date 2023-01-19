@@ -150,26 +150,29 @@ class orno:
       self.mqtt=self.mqtt_connect()
       self.isMQTT_connected = True
     except Exception as err:
-      print(f"Unexpected {err=}, {type(err)=}")
-      print(f"Current Retry Count is {self.mqtt_connect_retry_count}")
-      self.logMessage(f"Unexpected {err=}, {type(err)=}")
+        self.logMessage(f"mqtt_enable() ERROR: {err}")
 
   def mqtt_publish(self):
     try:
-      self.client.publish(self.L1U, f"{self.L1_voltage}")
-      self.client.publish(self.L1F, f"{self.L1_frequency}")
-      self.client.publish(self.L1I, f"{self.L1_current}")
-      self.client.publish(self.L1P, f"{self.L1_power}")
-      self.client.publish(self.L1AP, f"{self.L1_APower}")
-      self.client.publish(self.L1RP, f"{self.L1_RPower}")
-      self.client.publish(self.L1ApP, f"{self.L1_ApPower}")
-      self.client.publish(self.L1PF, f"{self.L1_PF}")
-      self.client.publish(self.TP, f"{self.TotalPower}")
+      if self.client.connected_flag:
+        self.client.publish(self.L1U, f"{self.L1_voltage}")
+        self.client.publish(self.L1F, f"{self.L1_frequency}")
+        self.client.publish(self.L1I, f"{self.L1_current}")
+        self.client.publish(self.L1P, f"{self.L1_power}")
+        self.client.publish(self.L1AP, f"{self.L1_APower}")
+        self.client.publish(self.L1RP, f"{self.L1_RPower}")
+        self.client.publish(self.L1ApP, f"{self.L1_ApPower}")
+        self.client.publish(self.L1PF, f"{self.L1_PF}")
+        self.client.publish(self.TP, f"{self.TotalPower}")
+      else:
+        self.logMessage(f"Publish Error: no connection")
+        self.client.connect(self.mqtt_broker, self.mqtt_port, clean_session=False)
     except Exception as err:
-      if self.debug:
-        print(f"Unexpected {err=}, {type(err)=}")
-        print(f"Current Retry Count is {self.mqtt_connect_retry_count}")
-        self.logMessage(f"Unexpected {err=}, {type(err)=}")
+        self.logMessage(f"mqtt_publish() ERROR: {err}")
+
+  def mqtt_on_disconnect(self, client, userdata, flags, rc=0):
+    self.logMessageprint("DisConnected flags"+"result code "+str(rc)+"client_id  ")
+    client.connected_flag=False
 
   def mqtt_on_connect(self, client, userdata, flags, rc):
     if rc == 0:
@@ -178,17 +181,21 @@ class orno:
     else:
       self.logMessage("ORNO/MQTT: Failed to connect, return code %d\n", rc)
       client.bad_connection_flag=True
+  
+  def mqtt_on_log(self, client, userdata, level, buf):
+      self.logMessage(f"{buf}")
 
   def mqtt_connect(self):
     self.client = mqtt_client.Client(self.mqtt_client_id)
-    self.client.bad_connection_flag=False
+    self.client.on_log = self.mqtt_on_log
+    self.client.connected_flag=False 
+    self.client.bad_connection_flag=False 
+    self.client.retry_count=0 
     self.client.username_pw_set(self.mqtt_username, self.mqtt_password)
     self.client.on_connect = self.mqtt_on_connect
+    self.client.on_disconnect = self.mqtt_on_disconnect
     try:
-      self.client.connect(self.mqtt_broker, self.mqtt_port)
-      #print(f"client_bad_connection_flag: {self.client.bad_connection_flag}")
+      self.client.connect(self.mqtt_broker, self.mqtt_port, clean_session=False)
     except Exception as err:
-      if self.debug: 
-        print(f"Unexpected {err=}, {type(err)=}")
-        self.logMessage(f"Unexpected {err=}, {type(err)=}")
+        self.logMessage(f"mqtt_connect() ERROR: {err}")
     return self.client
