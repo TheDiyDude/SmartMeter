@@ -184,12 +184,14 @@ class orno:
     if rc == 0:
       self.logMessage("ORNO/MQTT: Connected to MQTT Broker!")
       client.connected_flag=True
+      self.mqtt_actual_connection_try = 0
     else:
       self.logMessage("ORNO/MQTT: Failed to connect, return code %d\n", rc)
       client.bad_connection_flag=True
   
   def mqtt_on_log(self, client, userdata, level, buf):
-      self.logMessage(f"{buf}")
+      if self.debug:
+        self.logMessage(f"{buf}")
 
   def mqtt_connect(self):
     self.client = mqtt_client.Client(self.mqtt_client_id, clean_session=True)
