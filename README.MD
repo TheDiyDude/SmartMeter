@@ -188,7 +188,7 @@ print(f"L1 Active Power  : {APower} kW")
 print(f"L1 Reactive Power: {RPower} kvar")
 print(f"L1 Apparent Power: {ApPower} kva")
 print(f"Total Power      : {SumPower} kWh")
-```
+
 > Result
 ![Result](media/CustomRegistersAndLogging.png)
 
