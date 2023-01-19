@@ -38,6 +38,8 @@ class orno:
     self.port = port
     self.slave_id = slave_id
     self.polling_interval = 5
+    self.mqtt_actual_connection_try = 0
+    self.mqtt_connect_retry_count = 10
     self.smartmeter = minimalmodbus.Instrument(self.port, self.slave_id)
     self.smartmeter.serial.baudrate = 9600
     self.smartmeter.serial.bytesize = 8
@@ -54,8 +56,7 @@ class orno:
       self.mqtt_port=1886
       self.mqtt_topic="SmartMeter/ORNO"
       self.mqtt_username='USERNAME'
-      self.mqtt_password='PASSWORD'
-      self.mqtt_connect_retry_count = 30
+      self.mqtt_password='PASSWORD'     
     if self.log:
       try:
         self.logFH = open(self.logFile,"w")
@@ -166,8 +167,12 @@ class orno:
         self.client.publish(self.TP, f"{self.TotalPower}")
       else:
         self.logMessage(f"Publish Error: no connection")
-        self.client.connect(self.mqtt_broker, self.mqtt_port)
         self.client.loop(0.01)
+        self.mqtt_actual_connection_try = self.mqtt_actual_connection_try + 1
+        if self.mqtt_actual_connection_try < self.mqtt_connect_retry_count:
+          self.mqtt_publish()
+        else:
+          raise
     except Exception as err:
         self.logMessage(f"mqtt_publish() ERROR: {err}")
 
