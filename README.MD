@@ -4,7 +4,8 @@
 > With the orno python3 class it is very easy to communicate with the ORNO OR-WE-514 meter via RS-485 and ModBus RTU protocol. 
 > The intention was to make it very easy. Basically you need the class init with defaults and get going. The defaults should be
 > sufficient to communicate with the device. If you're going to use MQTT a view parameters for authentication and connection have
-> to be set and that's it. 
+> to be set and that's it. See Samples below how to do this.
+>
 >
 > Together with iobroker or similar software you can display the datapoints:
 ![Result](media/iobroker_MQTT_Topic.PNG)
@@ -20,6 +21,7 @@
 >                   Do not forget to connect one of the two Neutral wires to your grid neutral, otherwise it will not work.
 
 ![Raspberry Pi RS-485 Hat](media/raspPi1_Rs-485_Head.jpg)
+![OR-WE-514](media/Setup.png)
 
 > Required packages
 ```
