@@ -197,6 +197,7 @@ class orno:
     self.client.on_disconnect = self.mqtt_on_disconnect
     try:
       self.client.connect(self.mqtt_broker, self.mqtt_port)
+      self.client.loop(0.01)
     except Exception as err:
         self.logMessage(f"mqtt_connect() ERROR: {err}")
     return self.client
