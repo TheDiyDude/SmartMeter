@@ -39,7 +39,8 @@ class orno:
     self.slave_id = slave_id
     self.polling_interval = 5
     self.mqtt_actual_connection_try = 0
-    self.mqtt_connect_retry_count = 10
+    self.mqtt_connect_retry_count = 60
+    self.mqtt_connect_sleep_time  = 320
     self.smartmeter = minimalmodbus.Instrument(self.port, self.slave_id)
     self.smartmeter.serial.baudrate = 9600
     self.smartmeter.serial.bytesize = 8
@@ -124,12 +125,14 @@ class orno:
       while True:
         self.query()
         if self.useMQTT:
+          self.client.loop(0.01)
           self.mqtt_publish()
         t.sleep(self.polling_interval)
     else:
       for i in range(0,count):
         self.query()
         if self.useMQTT:
+           self.client.loop(0.01)
            self.mqtt_publish()
         t.sleep(self.polling_interval)
  
@@ -194,7 +197,7 @@ class orno:
         self.logMessage(f"{buf}")
 
   def mqtt_connect(self):
-    self.client = mqtt_client.Client(self.mqtt_client_id, clean_session=True)
+    self.client = mqtt_client.Client(self.mqtt_client_id)
     self.client.on_log = self.mqtt_on_log
     self.client.connected_flag=False 
     self.client.bad_connection_flag=False 
