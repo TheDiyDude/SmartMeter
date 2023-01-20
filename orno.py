@@ -31,8 +31,8 @@ L1_ApparentPower = 337  # 3 decimals kva
 TotalPower       = 40961 # 2 decimals kWh
 
 class orno:
-  def __init__(self, port, slave_id=1, useMQTT=False, log=True, logFile=""):
-    self.debug = False
+  def __init__(self, port, slave_id=1, useMQTT=False, debug=False, log=True, logFile=""):
+    self.debug = debug
     self.log = log
     self.logFile = logFile
     self.defaultlogFile = datetime.now().strftime(f"{os.path.basename(__file__)}-%Y%m%d%H%M%S.log")
