@@ -64,7 +64,7 @@ class orno:
         if self.logFile == "":
           self.logFile = self.defaultlogFile
         else:
-          self.logFile = datetime.now().strftime(f"{os.path.splitext(self.logFile)[0]}-%Y%m%d%H%M%S.{os.path.splitext(self.logFile)[1]}")
+          self.logFile = datetime.now().strftime(f"{os.path.splitext(self.logFile)[0]}-%Y%m%d%H%M%S{os.path.splitext(self.logFile)[1]}")
         self.logFH = open(self.logFile,"w")
         self.logMessage(f"ORNO Init - Startup.")
         self.logMessage(f"{self.smartmeter}")
