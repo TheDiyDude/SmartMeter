@@ -34,7 +34,7 @@ pip3 install paho-mqtt
 ```
 
 ### Available methods and parameters
-> instrument = orno.orno(port, slave_id=1, useMQTT=False, log=True)
+> instrument = orno.orno(port, slave_id=1, useMQTT=False, log=True, logFile="")
 ```
 port        Serial Device like COM4 or /dev/ttyUSB0
 
@@ -49,6 +49,9 @@ useMQTT     True or False, if True it is necessary to set MQTT communication par
 
 log         True/False
             Writes out a logfile in current execution folder. Setting degub=True makes it more verbose.
+
+logFile     Specify a custom logFile. The class adds a timestamp between end of
+            filename and extension like mylog-YYYYmmdd.mextension
 
 Other parameters
             debug               True/False, for debug output

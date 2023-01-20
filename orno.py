@@ -31,10 +31,11 @@ L1_ApparentPower = 337  # 3 decimals kva
 TotalPower       = 40961 # 2 decimals kWh
 
 class orno:
-  def __init__(self, port, slave_id=1, useMQTT=False, log=True):
+  def __init__(self, port, slave_id=1, useMQTT=False, log=True, logFile=""):
     self.debug = False
     self.log = log
-    self.logFile = datetime.now().strftime(f"{os.path.basename(__file__)}-%Y%m%d%H%M%S.log")
+    self.logFile = logFile
+    self.defaultlogFile = datetime.now().strftime(f"{os.path.basename(__file__)}-%Y%m%d%H%M%S.log")
     self.port = port
     self.slave_id = slave_id
     self.polling_interval = 5
@@ -60,6 +61,10 @@ class orno:
       self.mqtt_password='PASSWORD'     
     if self.log:
       try:
+        if self.logFile == "":
+          self.logFile = self.defaultlogFile
+        else:
+          self.logFile = datetime.now().strftime(f"{os.path.splitext(self.logFile)[0]}-%Y%m%d%H%M%S.{os.path.splitext(self.logFile)[1]}")
         self.logFH = open(self.logFile,"w")
         self.logMessage(f"ORNO Init - Startup.")
         self.logMessage(f"{self.smartmeter}")
