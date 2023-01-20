@@ -173,6 +173,9 @@ class orno:
         self.client.loop(0.01)
         self.mqtt_actual_connection_try = self.mqtt_actual_connection_try + 1
         if self.mqtt_actual_connection_try < self.mqtt_connect_retry_count:
+          self.client.loop(0.01)
+          t.sleep(1)
+          self.logMessage(f"mqtt_publish(): Error - retry {self.mqtt_actual_connection_try}")
           self.mqtt_publish()
         else:
           raise
