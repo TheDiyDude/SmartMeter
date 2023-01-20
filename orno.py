@@ -186,6 +186,8 @@ class orno:
           raise
     except Exception as err:
         self.logMessage(f"mqtt_publish() ERROR: {err}")
+        self.mqtt_enable()
+        self.client.loop(0.01)
 
   def mqtt_on_disconnect(self, client, userdata, flags, rc=0):
     self.logMessageprint("DisConnected flags"+"result code "+str(rc)+"client_id  ")
