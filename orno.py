@@ -31,10 +31,11 @@ L1_ApparentPower = 337  # 3 decimals kva
 TotalPower       = 40961 # 2 decimals kWh
 
 class orno:
-  def __init__(self, port, slave_id=1, useMQTT=False, debug=False, log=True, logFile=""):
+  def __init__(self, port, slave_id=1, useMQTT=False, debug=False, log=True, logFile="", type=0):
     self.debug = debug
     self.log = log
     self.logFile = logFile
+    self.type = type
     self.defaultlogFile = datetime.now().strftime(f"{os.path.basename(__file__)}-%Y%m%d%H%M%S.log")
     self.port = port
     self.slave_id = slave_id
@@ -50,7 +51,7 @@ class orno:
     self.smartmeter.serial.timeout = 0.6
     self.smartmeter.mode = minimalmodbus.MODE_RTU
     self.smartmeter.clear_buffers_before_each_transaction = False
-    self.smartmeter.debug = False
+    self.smartmeter.debug = debug
     self.useMQTT = useMQTT
     self.isMQTT_connected = False
     if self.useMQTT:
@@ -81,7 +82,7 @@ class orno:
         print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
   def query(self, register=0, decimals=2):
-    if register == 0:
+    if register == 0 and self.type == 0:
       self.L1_frequency = self.smartmeter.read_register(L1_Frequency,2,3)
       self.L1_voltage   = self.smartmeter.read_register(L1_Voltage,2,3)
       self.L1_current   = self.smartmeter.read_register(L1_Current,3,3)
@@ -92,14 +93,20 @@ class orno:
       self.L1_APower    = self.smartmeter.read_register(L1_ActivePower,3,3)
       self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower,3,3)
       self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower,3,3)
-    elif register == -1:
+    elif register == -1 and self.type == 0:
       self.L1_voltage   = self.smartmeter.read_register(L1_Voltage,2,3)
       self.L1_current   = self.smartmeter.read_register(L1_Current,3,3)
       self.L1_power     = self.L1_voltage * self.L1_current
       return self.L1_power
     else:
-      return self.smartmeter.read_register(register,decimals,3)
+      if self.type == 0:
+        return self.smartmeter.read_register(register,decimals,3)
+      elif self.type == 1:
+        return self.smartmeter.read_float(register,decimals)
 
+  def read_float(self, register=0, num=1, code=3, order=0):
+      return self.smartmeter.read_float(register,code,num,order)
+  
   def print(self):
     self.txt = "L1 Voltage        {U:.2f} V"
     print(self.txt.format(U=self.L1_voltage))
@@ -141,17 +148,21 @@ class orno:
            self.mqtt_publish()
         t.sleep(self.polling_interval)
  
+  def mqtt_prepareTopics(self, type=0):
+    if type == 0:
+      self.L1U  = f"{self.mqtt_topic}/L1_Voltage"
+      self.L1F  = f"{self.mqtt_topic}/L1_Frequency"
+      self.L1I  = f"{self.mqtt_topic}/L1_Current"
+      self.L1P  = f"{self.mqtt_topic}/L1_Power"
+      self.L1AP = f"{self.mqtt_topic}/L1_ActivePower"
+      self.L1RP = f"{self.mqtt_topic}/L1_ReactivePower"
+      self.L1ApP= f"{self.mqtt_topic}/L1_ApparentPower"
+      self.L1PF = f"{self.mqtt_topic}/L1_PF"
+      self.TP   = f"{self.mqtt_topic}/TotalPower"
+
   def mqtt_enable(self):
     self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
-    self.L1U  = f"{self.mqtt_topic}/L1_Voltage"
-    self.L1F  = f"{self.mqtt_topic}/L1_Frequency"
-    self.L1I  = f"{self.mqtt_topic}/L1_Current"
-    self.L1P  = f"{self.mqtt_topic}/L1_Power"
-    self.L1AP = f"{self.mqtt_topic}/L1_ActivePower"
-    self.L1RP = f"{self.mqtt_topic}/L1_ReactivePower"
-    self.L1ApP= f"{self.mqtt_topic}/L1_ApparentPower"
-    self.L1PF = f"{self.mqtt_topic}/L1_PF"
-    self.TP   = f"{self.mqtt_topic}/TotalPower"
+    self.mqtt_prepareTopics(self.type)
     if self.debug:
       self.logMessage(f"Using MQTT Broker: '{self.mqtt_broker}:{self.mqtt_port}' with user '{self.mqtt_username}' and secret '{self.mqtt_password}'")
       self.logMessage(f"Using MQTT Topic : '{self.mqtt_topic}'")
