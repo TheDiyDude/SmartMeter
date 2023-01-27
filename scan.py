@@ -35,10 +35,9 @@ print(f"Scanning SLAVE ID 1: from address {addr} to address {end}")
 while addr <= end:
   try:
     time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    print(f"{time} -- Address 0x{addr:04x}: {instrument.read_float(addr,2)}")
-    t.sleep(0.01)    
+    print(f"{time} -- Address 0x{addr:04x}: {instrument.read_float(addr,2)}")  
   except Exception as ex:
     #print(f"Addr {addr}: error")
     err = ex
-    
+  t.sleep(0.01)  
   addr = addr + 1
