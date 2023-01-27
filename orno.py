@@ -20,6 +20,9 @@ import os
 from paho.mqtt import client as mqtt_client
 from datetime import datetime
 
+WE520            = 0
+WE517            = 1
+
 L1_Frequency     = 304
 L1_Voltage       = 305
 L1_Current       = 314

@@ -26,7 +26,7 @@ else:
   addr  = int(sys.argv[1],16)
   end   = int(sys.argv[2],16)
 
-instrument=orno.orno('/dev/ttyUSB0')
+instrument=orno.orno('/dev/ttyUSB0',type=orno.WE517)
 
 
 
@@ -35,7 +35,7 @@ print(f"Scanning SLAVE ID 1: from address {addr} to address {end}")
 while addr <= end:
   try:
     time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    print(f"{time} -- Address 0x{addr:04x}: {instrument.read_float(addr,2)}")  
+    print(f"{time} -- Address 0x{addr:04x}: {instrument.query(addr,2)}")  
   except Exception as ex:
     #print(f"Addr {addr}: error")
     err = ex
