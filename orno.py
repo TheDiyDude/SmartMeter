@@ -184,9 +184,9 @@ class orno:
       self.txt = "Total Power       {TP:.2f} kWh"
       print(self.txt.format(TP=self.TotalPower))
     elif self.type == 1:
-      print(f"L1 Voltage        {self.L1_voltage:.0f} V")
-      print(f"L1 Frequency      {self.L1_frequency:.2f} Hz")
-      
+      print(f"L1 Voltage        {self.L1_voltage:5.0f} V")
+      print(f"L1 Frequency      {self.L1_frequency:5.2f} Hz")
+
   def doLoop(self, count=0, infinite=True):
     if self.useMQTT and not self.isMQTT_connected:
       self.mqtt_enable()
