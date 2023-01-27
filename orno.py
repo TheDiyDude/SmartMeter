@@ -23,16 +23,67 @@ from datetime import datetime
 WE520            = 0
 WE517            = 1
 
-L1_Frequency     = 304
-L1_Voltage       = 305
-L1_Current       = 314
-L1_Power         = -1
-L1_PF            = 344
-L1_ActivePower   = 321  # 3 decimals kvar
-L1_ReactivePower = 329  # 3 decimals kvar
-L1_ApparentPower = 337  # 3 decimals kva
-TotalPower       = 40961 # 2 decimals kWh
+#L1_Frequency     = 304
+#L1_Voltage       = 305
+#L1_Current       = 314
+#L1_Power         = -1
+#L1_PF            = 344
+#L1_ActivePower   = 321  # 3 decimals kvar
+#L1_ReactivePower = 329  # 3 decimals kvar
+#L1_ApparentPower = 337  # 3 decimals kva
+#TotalPower       = 40961 # 2 decimals kWh
 
+TotalPower                    = 0xA001,-1
+L1_Voltage                    = 0x131,0x0E
+L2_Voltage                    = 0x131,0x10
+L3_Voltage                    = 0x131,0x12
+L1_Frequency                  = 0x130,0x14
+L2_Frequency                  = 0x130,0x14
+L3_Frequency                  = 0x130,0x14
+L1_Current                    = 0x13A,0x16
+L2_Current                    = 0x13A,0x18
+L3_Current                    = 0x13A,0x1A
+Total_ActivePower             = -1,0x1C
+L1_ActivePower                = 0x141,0x1E
+L2_ActivePower                = 0x141,0x20
+L3_ActivePower                = 0x141,0x22
+Total_ReactivePower           = -1,0x24
+L1_ReactivePower              = 0x149,0x26
+L2_ReactivePower              = 0x149,0x28
+L3_ReactivePower              = 0x149,0x2A
+Total_ApparentPower           = -1,0x2C
+L1_ApparentPower              = 0x151,0x2E
+L2_ApparentPower              = 0x151,0x30
+L3_ApparentPower              = 0x151,0x32
+Total_PF                      = -1,0x34
+L1_PF                         = 0x158,0x36
+L2_PF                         = 0x158,0x38
+L3_PF                         = 0x158,0x3A
+Total_ActiveEnergy            = -1,0x0100
+L1_ActiveEnergy               = -1,0x0102
+L2_ActiveEnergy               = -1,0x0104
+L3_ActiveEnergy               = -1,0x0106
+Total_ForwardActiveEnergy     = -1,0x0108
+L1_ForwardActiveEnergy        = -1,0x010A
+L2_ForwardActiveEnergy        = -1,0x010C
+L3_ForwardActiveEnergy        = -1,0x010E
+Total_ReverseActiveEnergy     = -1,0x0110
+L1_ReverseActiveEnergy        = -1,0x0112
+L2_ReverseActiveEnergy        = -1,0x0114
+L3_ReverseActiveEnergy        = -1,0x0116
+T1_TotalActiveEnergy          = -1,0x0130
+T1_ForwardActiveEnergy        = -1,0x0132
+T1_ReverseActiveEnergy        = -1,0x0134
+T2_TotalActiveEnergy          = -1,0x013C
+T2_ForwardActiveEnergy        = -1,0x013E
+T2_ReverseActiveEnergy        = -1,0x0140
+T3_TotalActiveEnergy          = -1,0x0148
+T3_ForwardActiveEnergy        = -1,0x014A
+T3_ReverseActiveEnergy        = -1,0x014C
+T4_TotalActiveEnergy          = -1,0x0154
+T4_ForwardActiveEnergy        = -1,0x0156
+T4_ReverseActiveEnergy        = -1,0x0158
+GridFrequency                 = 0x130,0x14
 class orno:
   def __init__(self, port, slave_id=1, useMQTT=False, debug=False, log=True, logFile="", type=0):
     self.debug = debug
@@ -86,19 +137,19 @@ class orno:
 
   def query(self, register=0, decimals=2):
     if register == 0 and self.type == 0:
-      self.L1_frequency = self.smartmeter.read_register(L1_Frequency,2,3)
-      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage,2,3)
-      self.L1_current   = self.smartmeter.read_register(L1_Current,3,3)
-      #self.L1_power     = self.smartmeter.read_register(L1_Power,3,3)
+      self.L1_frequency = self.smartmeter.read_register(L1_Frequency[0],2,3)
+      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[0],2,3)
+      self.L1_current   = self.smartmeter.read_register(L1_Current[0],3,3)
+      #self.L1_power     = self.smartmeter.read_register(L1_Power[0],3,3)
       self.L1_power     = self.L1_voltage * self.L1_current
-      self.L1_PF        = self.smartmeter.read_register(L1_PF,3,3)
-      self.TotalPower   = self.smartmeter.read_register(TotalPower,2,3)
-      self.L1_APower    = self.smartmeter.read_register(L1_ActivePower,3,3)
-      self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower,3,3)
-      self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower,3,3)
+      self.L1_PF        = self.smartmeter.read_register(L1_PF[0],3,3)
+      self.TotalPower   = self.smartmeter.read_register(TotalPower[0],2,3)
+      self.L1_APower    = self.smartmeter.read_register(L1_ActivePower[0],3,3)
+      self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower[0],3,3)
+      self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower[0],3,3)
     elif register == -1 and self.type == 0:
-      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage,2,3)
-      self.L1_current   = self.smartmeter.read_register(L1_Current,3,3)
+      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[0],2,3)
+      self.L1_current   = self.smartmeter.read_register(L1_Current[0],3,3)
       self.L1_power     = self.L1_voltage * self.L1_current
       return self.L1_power
     else:
