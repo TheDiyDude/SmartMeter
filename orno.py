@@ -150,9 +150,9 @@ class orno:
       self.L1_frequency = self.read_float(L1_Frequency[self.type],2)
       self.L1_voltage   = self.read_float(L1_Voltage[self.type],2)
       self.L1_current   = self.read_float(L1_Current[self.type],2)
-      self.L1_power     = self.read_float(L1_ActiveEnergy[self.type],2)
+      self.L1_power     = self.L1_voltage * self.L1_current
       self.L1_PF        = self.read_float(L1_PF[self.type],2)
-      self.TotalPower   = self.read_float(TotalPower[self.type],2)
+      self.TotalPower   = self.read_float(L1_ActiveEnergy[self.type],2)
       self.L1_APower    = self.read_float(L1_ActivePower[self.type],2)
       self.L1_RPower    = self.read_float(L1_ReactivePower[self.type],2)
       self.L1_ApPower   = self.read_float(L1_ApparentPower[self.type],2)
