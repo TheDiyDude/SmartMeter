@@ -152,10 +152,13 @@ class orno:
       self.L1_current   = self.read_float(L1_Current[self.type],2)
       self.L1_power     = self.L1_voltage * self.L1_current
       self.L1_PF        = self.read_float(L1_PF[self.type],2)
-      self.TotalPower   = self.read_float(L1_ActiveEnergy[self.type],2)
       self.L1_APower    = self.read_float(L1_ActivePower[self.type],2)
       self.L1_RPower    = self.read_float(L1_ReactivePower[self.type],2)
       self.L1_ApPower   = self.read_float(L1_ApparentPower[self.type],2)
+      self.L1_AEnergy   = self.read_float(L1_ActiveEnergy[self.type],2)
+      self.L1_FAEnergy  = self.read_float(L1_ForwardActiveEnergy[self.type],2)
+      self.L1_RAEnergy  = self.read_float(L1_ReverseActiveEnergy[self.type],2)
+      self.TotalPower   = self.read_float(L1_ActiveEnergy[self.type],2)
     elif register == -1 and self.type == 0:
       self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,3)
       self.L1_current   = self.smartmeter.read_register(L1_Current[self.type],3,3)
@@ -191,16 +194,19 @@ class orno:
       self.txt = "Total Power       {TP:.2f} kWh"
       print(self.txt.format(TP=self.TotalPower))
     elif self.type == 1:
-      print(f"L1 Voltage        {self.L1_voltage:.0f} V")
-      print(f"L1 Frequency      {self.L1_frequency:.2f} Hz")
-      print(f"L1 Current        {self.L1_current:.3f} A")
-      print(f"L1 Power          {self.L1_power:.3f} W")
-      print(f"L1 Active Power   {self.L1_APower:.3f} kW")
-      print(f"L1 Reactive Power {self.L1_RPower:.3f} kvar")
-      print(f"L1 Apparent Power {self.L1_ApPower:.3f} kva")
-      print(f"L1 Power Factor   {self.L1_PF:.3f}")
-      print(f"Total Power       {self.TotalPower:.2f} kWh")
-
+      print(f"L1 Voltage                 {self.L1_voltage:.0f} V")
+      print(f"L1 Frequency               {self.L1_frequency:.2f} Hz")
+      print(f"L1 Current                 {self.L1_current:.3f} A")
+      print(f"L1 Power                   {self.L1_power:.3f} W")
+      print(f"L1 Active Power            {self.L1_APower:.3f} kW")
+      print(f"L1 Reactive Power          {self.L1_RPower:.3f} kvar")
+      print(f"L1 Apparent Power          {self.L1_ApPower:.3f} kva")
+      print(f"L1 Power Factor            {self.L1_PF:.2f}")
+      print(f"L1 Active Energy           {self.L1_AEnergy:.3f}")
+      print(f"L1 Forward Active Energy   {self.L1_FAEnergy:.3f}")
+      print(f"L1 Reverse Active Energy   {self.L1_RAEnergy:.3f}")
+      print(f"Total Power                {self.TotalPower:.2f} kWh")
+      
   def doLoop(self, count=0, infinite=True):
     if self.useMQTT and not self.isMQTT_connected:
       self.mqtt_enable()
