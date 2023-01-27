@@ -137,19 +137,21 @@ class orno:
 
   def query(self, register=0, decimals=2):
     if register == 0 and self.type == 0:
-      self.L1_frequency = self.smartmeter.read_register(L1_Frequency[0],2,3)
-      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[0],2,3)
-      self.L1_current   = self.smartmeter.read_register(L1_Current[0],3,3)
-      #self.L1_power     = self.smartmeter.read_register(L1_Power[0],3,3)
+      self.L1_frequency = self.smartmeter.read_register(L1_Frequency[self.type],2,3)
+      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,3)
+      self.L1_current   = self.smartmeter.read_register(L1_Current[self.type],3,3)
       self.L1_power     = self.L1_voltage * self.L1_current
-      self.L1_PF        = self.smartmeter.read_register(L1_PF[0],3,3)
-      self.TotalPower   = self.smartmeter.read_register(TotalPower[0],2,3)
-      self.L1_APower    = self.smartmeter.read_register(L1_ActivePower[0],3,3)
-      self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower[0],3,3)
-      self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower[0],3,3)
+      self.L1_PF        = self.smartmeter.read_register(L1_PF[self.type],3,3)
+      self.TotalPower   = self.smartmeter.read_register(TotalPower[self.type],2,3)
+      self.L1_APower    = self.smartmeter.read_register(L1_ActivePower[self.type],3,3)
+      self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower[self.type],3,3)
+      self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower[self.type],3,3)
+    elif register == 0 and self.type == 1:
+      self.L1_frequency = self.read_float(L1_Frequency[self.type],2)
+      self.L1_voltage   = self.read_float(L1_Voltage[self.type],2)
     elif register == -1 and self.type == 0:
-      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[0],2,3)
-      self.L1_current   = self.smartmeter.read_register(L1_Current[0],3,3)
+      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,3)
+      self.L1_current   = self.smartmeter.read_register(L1_Current[self.type],3,3)
       self.L1_power     = self.L1_voltage * self.L1_current
       return self.L1_power
     else:
@@ -162,24 +164,27 @@ class orno:
       return self.smartmeter.read_float(register,code,num,order)
   
   def print(self):
-    self.txt = "L1 Voltage        {U:.2f} V"
-    print(self.txt.format(U=self.L1_voltage))
-    self.txt = "L1 Frequency      {F:.2f} Hz"
-    print(self.txt.format(F=self.L1_frequency))
-    self.txt = "L1 Current        {I:.3f} A"
-    print(self.txt.format(I=self.L1_current))
-    self.txt = "L1 Power          {P:.3f} W"
-    print(self.txt.format(P=self.L1_power))
-    self.txt = "L1 Active Power   {AP:.3f} kW"
-    print(self.txt.format(AP=self.L1_APower))
-    self.txt = "L1 Reactive Power {RP:.3f} kvar"
-    print(self.txt.format(RP=self.L1_RPower))
-    self.txt = "L1 Apparent Power {ApP:.3f} kva"
-    print(self.txt.format(ApP=self.L1_ApPower))
-    self.txt = "L1 Power Factor   {PF:.3f}"
-    print(self.txt.format(PF=self.L1_PF))
-    self.txt = "Total Power       {TP:.2f} kWh"
-    print(self.txt.format(TP=self.TotalPower))
+    if self.type == 0:
+      self.txt = "L1 Voltage        {U:.2f} V"
+      print(self.txt.format(U=self.L1_voltage))
+      self.txt = "L1 Frequency      {F:.2f} Hz"
+      print(self.txt.format(F=self.L1_frequency))
+      self.txt = "L1 Current        {I:.3f} A"
+      print(self.txt.format(I=self.L1_current))
+      self.txt = "L1 Power          {P:.3f} W"
+      print(self.txt.format(P=self.L1_power))
+      self.txt = "L1 Active Power   {AP:.3f} kW"
+      print(self.txt.format(AP=self.L1_APower))
+      self.txt = "L1 Reactive Power {RP:.3f} kvar"
+      print(self.txt.format(RP=self.L1_RPower))
+      self.txt = "L1 Apparent Power {ApP:.3f} kva"
+      print(self.txt.format(ApP=self.L1_ApPower))
+      self.txt = "L1 Power Factor   {PF:.3f}"
+      print(self.txt.format(PF=self.L1_PF))
+      self.txt = "Total Power       {TP:.2f} kWh"
+      print(self.txt.format(TP=self.TotalPower))
+    elif self.type == 1:
+      print(f"L1 Voltage        {self.L1_voltage:.0f} V")
 
   def doLoop(self, count=0, infinite=True):
     if self.useMQTT and not self.isMQTT_connected:
