@@ -105,9 +105,9 @@ class orno:
       if self.type == 0:
         return self.smartmeter.read_register(register,decimals,3)
       elif self.type == 1:
-        return self.smartmeter.read_float(register=register,num=decimals)
+        return self.smartmeter.read_float(register,decimals,3,0)
 
-  def read_float(self, register=0, num=1, code=3, order=0):
+  def read_float(self, register=0, num=2, code=3, order=0):
       return self.smartmeter.read_float(register,code,num,order)
   
   def print(self):
