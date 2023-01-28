@@ -211,7 +211,7 @@ class orno:
       print(f"L1 Frequency                {self.L1_frequency:.2f} Hz")
       print(f"L1 Current                  {self.L1_current:.3f} A")
       print(f"L1 Power                    {self.L1_power:.3f} W")
-      print(f"L1 Active Power             {self.L1_APower:.3f} kW"
+      print(f"L1 Active Power             {self.L1_APower:.3f} kW")
       print(f"L1 Reactive Power           {self.L1_RPower:.3f} kvar")
       print(f"L1 Apparent Power           {self.L1_ApPower:.3f} kva")
       print(f"L1 Power Factor             {self.L1_PF:.2f}")
