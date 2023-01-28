@@ -54,6 +54,10 @@ logFile     Specify a custom logFile. The class adds a timestamp between end of
             filename and extension like mylog-YYYYmmdd.mextension
 
 type        the type of the ORNO device, WE514 (single phase) or WE517 (3 phase)
+            current supported values are:
+              WE514
+              WE516
+              WE517
 
 Other parameters
             debug               True/False, for debug output
