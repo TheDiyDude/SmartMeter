@@ -20,18 +20,9 @@ import os
 from paho.mqtt import client as mqtt_client
 from datetime import datetime
 
-WE520            = 0
+WE514            = 0
+WE516            = 1
 WE517            = 1
-
-#L1_Frequency     = 304
-#L1_Voltage       = 305
-#L1_Current       = 314
-#L1_Power         = -1
-#L1_PF            = 344
-#L1_ActivePower   = 321  # 3 decimals kvar
-#L1_ReactivePower = 329  # 3 decimals kvar
-#L1_ApparentPower = 337  # 3 decimals kva
-#TotalPower       = 40961 # 2 decimals kWh
 
 TotalPower                    = 0xA001,-1
 L1_Voltage                    = 0x131,0x0E
@@ -216,24 +207,15 @@ class orno:
   
   def print(self):
     if self.type == 0:
-      self.txt = "L1 Voltage        {U:.2f} V"
-      print(self.txt.format(U=self.L1_voltage))
-      self.txt = "L1 Frequency      {F:.2f} Hz"
-      print(self.txt.format(F=self.L1_frequency))
-      self.txt = "L1 Current        {I:.3f} A"
-      print(self.txt.format(I=self.L1_current))
-      self.txt = "L1 Power          {P:.3f} W"
-      print(self.txt.format(P=self.L1_power))
-      self.txt = "L1 Active Power   {AP:.3f} kW"
-      print(self.txt.format(AP=self.L1_APower))
-      self.txt = "L1 Reactive Power {RP:.3f} kvar"
-      print(self.txt.format(RP=self.L1_RPower))
-      self.txt = "L1 Apparent Power {ApP:.3f} kva"
-      print(self.txt.format(ApP=self.L1_ApPower))
-      self.txt = "L1 Power Factor   {PF:.3f}"
-      print(self.txt.format(PF=self.L1_PF))
-      self.txt = "Total Power       {TP:.2f} kWh"
-      print(self.txt.format(TP=self.TotalPower))
+      print(f"L1 Voltage                  {self.L1_voltage:.0f} V")
+      print(f"L1 Frequency                {self.L1_frequency:.2f} Hz")
+      print(f"L1 Current                  {self.L1_current:.3f} A")
+      print(f"L1 Power                    {self.L1_power:.3f} W")
+      print(f"L1 Active Power             {self.L1_APower:.3f} kW"
+      print(f"L1 Reactive Power           {self.L1_RPower:.3f} kvar")
+      print(f"L1 Apparent Power           {self.L1_ApPower:.3f} kva")
+      print(f"L1 Power Factor             {self.L1_PF:.2f}")
+      print(f"Total Power                 {self.TotalPower:.2f} kWh")
     elif self.type == 1:
       print(f"L1 Voltage                  {self.L1_voltage:.0f} V")
       print(f"L1 Frequency                {self.L1_frequency:.2f} Hz")
@@ -312,6 +294,7 @@ class orno:
  
   def mqtt_prepareTopics(self, type=0):
     if type == 0:
+      #self.mqtt_topic = f"{self.mqtt_topic}/WE-514"
       self.L1U  = f"{self.mqtt_topic}/L1_Voltage"
       self.L1F  = f"{self.mqtt_topic}/L1_Frequency"
       self.L1I  = f"{self.mqtt_topic}/L1_Current"
@@ -321,6 +304,61 @@ class orno:
       self.L1ApP= f"{self.mqtt_topic}/L1_ApparentPower"
       self.L1PF = f"{self.mqtt_topic}/L1_PF"
       self.TP   = f"{self.mqtt_topic}/TotalPower"
+    if type == 1:
+      #self.mqtt_topic = f"{self.mqtt_topic}/WE-517"
+      self.L1U   = f"{self.mqtt_topic}/L1_Voltage"
+      self.L1F   = f"{self.mqtt_topic}/L1_Frequency"
+      self.L1I   = f"{self.mqtt_topic}/L1_Current"
+      self.L1P   = f"{self.mqtt_topic}/L1_Power"
+      self.L1AP  = f"{self.mqtt_topic}/L1_ActivePower"
+      self.L1RP  = f"{self.mqtt_topic}/L1_ReactivePower"
+      self.L1ApP = f"{self.mqtt_topic}/L1_ApparentPower"
+      self.L1PF  = f"{self.mqtt_topic}/L1_PF"
+      self.L1AE  = f"{self.mqtt_topic}/L1_ActiveEnergy"
+      self.L1FAE = f"{self.mqtt_topic}/L1_ForwardActiveEnergy"
+      self.L1RAE = f"{self.mqtt_topic}/L1_ReverseActiveEnergy"
+      self.L2U   = f"{self.mqtt_topic}/L2_Voltage"
+      self.L2F   = f"{self.mqtt_topic}/L2_Frequency"
+      self.L2I   = f"{self.mqtt_topic}/L2_Current"
+      self.L2P   = f"{self.mqtt_topic}/L2_Power"
+      self.L2AP  = f"{self.mqtt_topic}/L2_ActivePower"
+      self.L2RP  = f"{self.mqtt_topic}/L2_ReactivePower"
+      self.L2ApP = f"{self.mqtt_topic}/L2_ApparentPower"
+      self.L2PF  = f"{self.mqtt_topic}/L2_PF"
+      self.L2AE  = f"{self.mqtt_topic}/L2_ActiveEnergy"
+      self.L2FAE = f"{self.mqtt_topic}/L2_ForwardActiveEnergy"
+      self.L2RAE = f"{self.mqtt_topic}/L2_ReverseActiveEnergy"
+      self.L3U   = f"{self.mqtt_topic}/L3_Voltage"
+      self.L3F   = f"{self.mqtt_topic}/L3_Frequency"
+      self.L3I   = f"{self.mqtt_topic}/L3_Current"
+      self.L3P   = f"{self.mqtt_topic}/L3_Power"
+      self.L3AP  = f"{self.mqtt_topic}/L3_ActivePower"
+      self.L3RP  = f"{self.mqtt_topic}/L3_ReactivePower"
+      self.L3ApP = f"{self.mqtt_topic}/L3_ApparentPower"
+      self.L3PF  = f"{self.mqtt_topic}/L3_PF"
+      self.L3AE  = f"{self.mqtt_topic}/L3_ActiveEnergy"
+      self.L3FAE = f"{self.mqtt_topic}/L3_ForwardActiveEnergy"
+      self.L3RAE = f"{self.mqtt_topic}/L3_ReverseActiveEnergy"
+      self.GF    = f"{self.mqtt_topic}/GridFrequency"
+      self.TAP   = f"{self.mqtt_topic}/Total_ActivePower"
+      self.TRP   = f"{self.mqtt_topic}/Total_ReactivePower"
+      self.TApP  = f"{self.mqtt_topic}/Total_ApparentPower"
+      self.TPF   = f"{self.mqtt_topic}/Total_PF"
+      self.TAE   = f"{self.mqtt_topic}/Total_ActiveEnergy"
+      self.TFAE  = f"{self.mqtt_topic}/Total_ForwardActiveEnergy"
+      self.TRAE  = f"{self.mqtt_topic}/Total_ReverseActiveEnergy"
+      self.T1TAE = f"{self.mqtt_topic}/T1_Total_ActiveEnergy"
+      self.T1TFAE= f"{self.mqtt_topic}/T1_Total_ForwardActiveEnergy"
+      self.T1TRAE= f"{self.mqtt_topic}/T1_Total_ReverseActiveEnergy"
+      self.T2TAE = f"{self.mqtt_topic}/T2_Total_ActiveEnergy"
+      self.T2TFAE= f"{self.mqtt_topic}/T2_Total_ForwardActiveEnergy"
+      self.T2TRAE= f"{self.mqtt_topic}/T2_Total_ReverseActiveEnergy"
+      self.T3TAE = f"{self.mqtt_topic}/T3_Total_ActiveEnergy"
+      self.T3TFAE= f"{self.mqtt_topic}/T3_Total_ForwardActiveEnergy"
+      self.T3TRAE= f"{self.mqtt_topic}/T3_Total_ReverseActiveEnergy"
+      self.T4TAE = f"{self.mqtt_topic}/T4_Total_ActiveEnergy"
+      self.T4TFAE= f"{self.mqtt_topic}/T4_Total_ForwardActiveEnergy"
+      self.T4TRAE= f"{self.mqtt_topic}/T4_Total_ReverseActiveEnergy"
 
   def mqtt_enable(self):
     self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
@@ -337,15 +375,70 @@ class orno:
   def mqtt_publish(self):
     try:
       if self.client.connected_flag:
-        self.client.publish(self.L1U, f"{self.L1_voltage}")
-        self.client.publish(self.L1F, f"{self.L1_frequency}")
-        self.client.publish(self.L1I, f"{self.L1_current}")
-        self.client.publish(self.L1P, f"{self.L1_power}")
-        self.client.publish(self.L1AP, f"{self.L1_APower}")
-        self.client.publish(self.L1RP, f"{self.L1_RPower}")
-        self.client.publish(self.L1ApP, f"{self.L1_ApPower}")
-        self.client.publish(self.L1PF, f"{self.L1_PF}")
-        self.client.publish(self.TP, f"{self.TotalPower}")
+        if self.type == 0:
+          self.client.publish(self.L1U, f"{self.L1_voltage}")
+          self.client.publish(self.L1F, f"{self.L1_frequency}")
+          self.client.publish(self.L1I, f"{self.L1_current}")
+          self.client.publish(self.L1P, f"{self.L1_power}")
+          self.client.publish(self.L1AP, f"{self.L1_APower}")
+          self.client.publish(self.L1RP, f"{self.L1_RPower}")
+          self.client.publish(self.L1ApP, f"{self.L1_ApPower}")
+          self.client.publish(self.L1PF, f"{self.L1_PF}")
+          self.client.publish(self.TP, f"{self.TotalPower}")
+        if self.type == 1:
+          self.client.publish(self.L1U, f"{self.L1_voltage}")
+	        self.client.publish(self.L1F, f"{self.L1_frequency}")  
+          self.client.publish(self.L1I, f"{self.L1_current}")   
+          self.client.publish(self.L1P, f"{self.L1_power}")   
+          self.client.publish(self.L1AP, f"{self.L1_APower}")  
+          self.client.publish(self.L1RP, f"{self.L1_RPower}")  
+          self.client.publish(self.L1ApP, f"{self.L1_ApPower}") 
+          self.client.publish(self.L1PF, f"{self.L1_PF}")  
+          self.client.publish(self.L1AE, f"{self.L1_AEnergy}")  
+          self.client.publish(self.L1FAE, f"{self.L1_FAEnergy}") 
+          self.client.publish(self.L1RAE, f"{self.L1_RAEnergy}") 
+          self.client.publish(self.L2U, f"{self.L2_voltage}")   
+          self.client.publish(self.L2F, f"{self.L2_frequency}")   
+          self.client.publish(self.L2I, f"{self.L2_current}")   
+          self.client.publish(self.L2P, f"{self.L2_power}")   
+          self.client.publish(self.L2AP, f"{self.L2_APower}")  
+          self.client.publish(self.L2RP, f"{self.L2_RPower}")  
+          self.client.publish(self.L2ApP, f"{self.L2_ApPower}") 
+          self.client.publish(self.L2PF, f"{self.L2_PF}")  
+          self.client.publish(self.L2AE, f"{self.L2_AEnergy}")  
+          self.client.publish(self.L2FAE, f"{self.L2_FAEnergy}") 
+          self.client.publish(self.L2RAE, f"{self.L2_RAEnergy}") 
+          self.client.publish(self.L3U, f"{self.L3_voltage}")   
+          self.client.publish(self.L3F, f"{self.L3_frequency}")   
+          self.client.publish(self.L3I, f"{self.L3_current}")   
+          self.client.publish(self.L3P, f"{self.L3_power}")   
+          self.client.publish(self.L3AP, f"{self.L3_APower}")  
+          self.client.publish(self.L3RP, f"{self.L3_RPower}")  
+          self.client.publish(self.L3ApP, f"{self.L3_ApPower}") 
+          self.client.publish(self.L3PF, f"{self.L3_PF}")  
+          self.client.publish(self.L3AE, f"{self.L3_AEnergy}")  
+          self.client.publish(self.L3FAE, f"{self.L3_FAEnergy}") 
+          self.client.publish(self.L3RAE, f"{self.L3_RAEnergy}")
+          self.client.publish(self.GF, f"{self.L1_frequency}")   
+          self.client.publish(self.TAP, f"{self.TotalActivePower}")
+          self.client.publish(self.TRP, f"{self.TotalReactivePower}")
+          self.client.publish(self.TApP, f"{self.TotalApparentPower}")
+          self.client.publish(self.TPF, f"{self.TotalPF}")
+          self.client.publish(self.TAE, f"{self.TotalActiveEnergy}")
+          self.client.publish(self.TFAE, f"{self.TotalForwardActiveEnergy}")
+          self.client.publish(self.TRAE, f"{self.TotalReverseActiveEnergy}")
+          self.client.publish(self.T1TAE, f"{self.T1_TotalActiveEnergy}")
+          self.client.publish(self.T1TFAE, f"{self.T1_ForwardActiveEnergy}")
+          self.client.publish(self.T1TRAE, f"{self.T1_ReverseActiveEnergy}")
+          self.client.publish(self.T2TAE, f"{self.T2_TotalActiveEnergy}")
+          self.client.publish(self.T2TFAE, f"{self.T2_ForwardActiveEnergy}")
+          self.client.publish(self.T2TRAE, f"{self.T2_ReverseActiveEnergy}")
+          self.client.publish(self.T3TAE, f"{self.T3_TotalActiveEnergy}")
+          self.client.publish(self.T3TFAE, f"{self.T3_ForwardActiveEnergy}")
+          self.client.publish(self.T3TRAE, f"{self.T3_ReverseActiveEnergy}")
+          self.client.publish(self.T4TAE, f"{self.T4_TotalActiveEnergy}")
+          self.client.publish(self.T4TFAE, f"{self.T4_ForwardActiveEnergy}")
+          self.client.publish(self.T4TRAE, f"{self.T4_ReverseActiveEnergy}")
       else:
         self.logMessage(f"Publish Error: no connection")
         self.client.loop(0.01)
