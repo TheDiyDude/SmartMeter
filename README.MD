@@ -232,8 +232,8 @@ while addr <= end:
     err = ex
   t.sleep(0.01)  
   addr = addr + 1
-![Result](media/scan.png)
 ````
+![Result](media/scan.png)
 
 >
 > Author: Marc-Oliver Blumenauer 
