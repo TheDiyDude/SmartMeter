@@ -10,6 +10,8 @@
 > Together with iobroker or similar software you can display the datapoints:
 ![Result](media/iobroker_MQTT_Topic.PNG)
 ![Result](media/HABPanel_SmartMeter1.PNG)
+![Result](media/WE517_Grafana.png)
+![Result](media/WE517_iobroker_objects.png)
 
 > I used a RS-485 modul and build an easy RS-485 hat to my Raspberry Pi 1. 
 >
