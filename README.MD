@@ -34,7 +34,7 @@ pip3 install paho-mqtt
 ```
 
 ### Available methods and parameters
-> instrument = orno.orno(port, slave_id=1, useMQTT=False, log=True, logFile="")
+> instrument = orno.orno(port, slave_id=1, useMQTT=False, log=True, logFile="", type=orno.WE514)
 ```
 port        Serial Device like COM4 or /dev/ttyUSB0
 
@@ -52,6 +52,8 @@ log         True/False
 
 logFile     Specify a custom logFile. The class adds a timestamp between end of
             filename and extension like mylog-YYYYmmdd.mextension
+
+type        the type of the ORNO device, WE514 (single phase) or WE517 (3 phase)
 
 Other parameters
             debug               True/False, for debug output
@@ -79,6 +81,12 @@ orno.TotalPower
 Sample
 TotalPower = instrument.query(orno.TotalPower,3)
 
+```
+
+> insrument.read_float(address,count)
+````
+This method will read float values from the slave. Count is the number of floats or width given on documentation.
+Usually it is two.
 ```
 
 > instrument.print()
@@ -193,6 +201,39 @@ print(f"L1 Apparent Power: {ApPower} kva")
 print(f"Total Power      : {SumPower} kWh")
 ```
 ![Result](media/CustomRegistersAndLogging.png)
+
+> Sample to scan for registers on a device to discover values to use
+```
+import orno
+import time as t
+from datetime import datetime
+import sys
+
+if len(sys.argv) == 1:
+  print(f"Usage: {sys.argv[0]} StartAddress EndAddress\nusing default address range 0x0000 to 0x0360\n")
+
+if len(sys.argv) < 2:
+  addr  = int("0x0000",16)
+  end   = int("0x0360",16)
+else:
+  addr  = int(sys.argv[1],16)
+  end   = int(sys.argv[2],16)
+
+instrument=orno.orno('/dev/ttyUSB0',type=orno.WE517)
+
+print(f"Scanning SLAVE ID 1: from address {addr} to address {end}")
+
+while addr <= end:
+  try:
+    time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    print(f"{time} -- Address 0x{addr:04x}: {instrument.query(addr,2)}")  
+  except Exception as ex:
+    #print(f"Addr {addr}: error")
+    err = ex
+  t.sleep(0.01)  
+  addr = addr + 1
+![Result](media/scan.png)
+````
 
 >
 > Author: Marc-Oliver Blumenauer 
