@@ -387,7 +387,7 @@ class orno:
           self.client.publish(self.TP, f"{self.TotalPower}")
         if self.type == 1:
           self.client.publish(self.L1U, f"{self.L1_voltage}")
-	        self.client.publish(self.L1F, f"{self.L1_frequency}")  
+          self.client.publish(self.L1F, f"{self.L1_frequency}")  
           self.client.publish(self.L1I, f"{self.L1_current}")   
           self.client.publish(self.L1P, f"{self.L1_power}")   
           self.client.publish(self.L1AP, f"{self.L1_APower}")  
