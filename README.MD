@@ -84,7 +84,7 @@ TotalPower = instrument.query(orno.TotalPower,3)
 ```
 
 > insrument.read_float(address,count)
-````
+```
 This method will read float values from the slave. Count is the number of floats or width given on documentation.
 Usually it is two.
 ```
@@ -234,6 +234,8 @@ while addr <= end:
   addr = addr + 1
 ````
 ![Result](media/scan.png)
+
+
 
 >
 > Author: Marc-Oliver Blumenauer 
