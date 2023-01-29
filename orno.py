@@ -281,16 +281,16 @@ class orno:
       while True:
         self.query()
         if self.useMQTT:
-          self.client.loop(0.01)
           self.mqtt_publish()
         t.sleep(self.polling_interval)
     else:
       for i in range(0,count):
         self.query()
         if self.useMQTT:
-           self.client.loop(0.01)
            self.mqtt_publish()
         t.sleep(self.polling_interval)
+    if self.useMQTT:
+          self.client.loop(0.10)
  
   def mqtt_prepareTopics(self, type=0):
     if type == 0:
@@ -452,12 +452,13 @@ class orno:
           raise
     except Exception as err:
         self.logMessage(f"mqtt_publish() ERROR: {err}")
-        self.mqtt_enable()
-        self.client.loop(0.01)
+        #self.mqtt_enable()
+        #self.client.loop(0.01)
 
   def mqtt_on_disconnect(self, client, userdata, flags, rc=0):
     self.logMessageprint("DisConnected flags"+"result code "+str(rc)+"client_id  ")
     client.connected_flag=False
+    self.mqtt=self.mqtt_connect()
 
   def mqtt_on_connect(self, client, userdata, flags, rc):
     if rc == 0:
