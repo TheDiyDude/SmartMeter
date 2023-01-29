@@ -17,6 +17,7 @@ import serial
 import time as t
 import random
 import os
+import socket
 from paho.mqtt import client as mqtt_client
 from datetime import datetime
 
@@ -88,6 +89,7 @@ class orno:
     self.mqtt_actual_connection_try = 0
     self.mqtt_connect_retry_count = 60
     self.mqtt_connect_sleep_time  = 320
+    self.mqtt_client_id=""
     self.smartmeter = minimalmodbus.Instrument(self.port, self.slave_id)
     self.smartmeter.serial.baudrate = 9600
     self.smartmeter.serial.bytesize = 8
@@ -361,7 +363,9 @@ class orno:
       self.T4TRAE= f"{self.mqtt_topic}/T4_Total_ReverseActiveEnergy"
 
   def mqtt_enable(self):
-    self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
+    #self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
+    if self.mqtt_client_id == ""
+      self.mqtt_client_id=f"ORNO-{socket.gethostname()}-{random.randint(1000, 8000)"
     self.mqtt_prepareTopics(self.type)
     if self.debug:
       self.logMessage(f"Using MQTT Broker: '{self.mqtt_broker}:{self.mqtt_port}' with user '{self.mqtt_username}' and secret '{self.mqtt_password}'")
