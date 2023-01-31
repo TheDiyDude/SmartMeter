@@ -456,7 +456,7 @@ class orno:
         #self.client.loop(0.01)
 
   def mqtt_on_disconnect(self, client, userdata, flags, rc=0):
-    self.logMessageprint("DisConnected flags"+"result code "+str(rc)+"client_id  ")
+    self.logMessage(f"DisConnected flags"+"result code "+str(rc)+"client_id  ")
     client.connected_flag=False
     self.mqtt=self.mqtt_connect()
 
