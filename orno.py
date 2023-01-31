@@ -364,7 +364,7 @@ class orno:
 
   def mqtt_enable(self):
     #self.mqtt_client_id=f'ORNO-{random.randint(1000, 8000)}'
-    if self.mqtt_client_id == ""
+    if self.mqtt_client_id == "":
       self.mqtt_client_id=f"ORNO-{socket.gethostname()}-{random.randint(1000, 8000)"
     self.mqtt_prepareTopics(self.type)
     if self.debug:
