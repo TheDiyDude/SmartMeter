@@ -109,7 +109,10 @@ class orno:
     self.smartmeter = minimalmodbus.Instrument(self.port, self.slave_id)
     self.smartmeter.serial.baudrate = 9600
     self.smartmeter.serial.bytesize = 8
-    self.smartmeter.serial.parity = serial.PARITY_EVEN
+    if type == SDM72DV2:
+      self.smartmeter.serial.parity = serial.PARITY_NONE
+    else:
+      self.smartmeter.serial.parity = serial.PARITY_EVEN
     self.smartmeter.serial.stopbits = 1
     self.smartmeter.serial.timeout = 0.6
     self.smartmeter.mode = minimalmodbus.MODE_RTU
