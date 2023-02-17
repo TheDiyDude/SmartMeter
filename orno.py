@@ -149,13 +149,13 @@ class orno:
 
   def query(self, register=0, decimals=2):
     if register == 0 and self.type == SDM72DV2:
-      self.L1_APower                = self.read_float(L1_ActivePower[self.type],2,self.fc)
-      self.L2_APower                = self.read_float(L2_ActivePower[self.type],2,self.fc)
-      self.L3_APower                = self.read_float(L3_ActivePower[self.type],2,self.fc)
-      self.L1_frequency             = self.read_float(L1_Frequency[self.type],2,self.fc)
-      self.TotalActivePower         = self.read_float(L1_ActivePower[self.type],2,self.fc)
-      self.TotalForwardActiveEnergy = self.read_float(Total_ForwardActiveEnergy[self.type],2,self.fc)
-      self.TotalReverseActiveEnergy = self.read_float(Total_ReverseActiveEnergy[self.type],2,self.fc)  
+      self.L1_APower                 = self.read_float(L1_ActivePower[self.type],2,self.fc)
+      self.L2_APower                 = self.read_float(L2_ActivePower[self.type],2,self.fc)
+      self.L3_APower                 = self.read_float(L3_ActivePower[self.type],2,self.fc)
+      self.L1_frequency              = self.read_float(GridFrequency[self.type],2,self.fc)
+      self.Net_Power                 = self.read_float(Net_Power[self.type],2,self.fc)
+      self.Total_Import_Active_Power = self.read_float(Total_Import_Active_Power[self.type],2,self.fc)
+      self.Total_Export_Active_Power = self.read_float(Total_Export_Active_Power[self.type],2,self.fc)  
     if register == 0 and self.type == WE514:
       self.L1_frequency = self.smartmeter.read_register(L1_Frequency[self.type],2,self.fc)
       self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,self.fc)
