@@ -149,8 +149,11 @@ class orno:
 
   def query(self, register=0, decimals=2):
     if register == 0 and self.type == SDM72DV2:
+      self.L1_voltage                = self.read_float(L1_Voltage[self.type],2,self.fc)
       self.L1_APower                 = self.read_float(L1_ActivePower[self.type],2,self.fc)
+      self.L2_voltage                = self.read_float(L2_Voltage[self.type],2,self.fc)
       self.L2_APower                 = self.read_float(L2_ActivePower[self.type],2,self.fc)
+      self.L3_voltage                = self.read_float(L3_Voltage[self.type],2,self.fc)
       self.L3_APower                 = self.read_float(L3_ActivePower[self.type],2,self.fc)
       self.GridFrequency             = self.read_float(GridFrequency[self.type],2,self.fc)
       self.Net_Power                 = self.read_float(Net_Power[self.type],2,self.fc)
@@ -236,8 +239,11 @@ class orno:
   
   def print(self):
     if self.type == SDM72DV2:
+      print(f"L1 Voltage                  {self.L1_voltage:.0f} V")
       print(f"L1 Power (Active)           {self.L1_APower:.3f} W")
+      print(f"L2 Voltage                  {self.L2_voltage:.0f} V")
       print(f"L2 Power (Active)           {self.L2_APower:.3f} W")
+      print(f"L3 Voltage                  {self.L3_voltage:.0f} V")
       print(f"L3 Power (Active)           {self.L3_APower:.3f} W")
       print(f"Frequency                   {self.GridFrequency:.3f} Hz")
       print(f"Net kWh (Import - Export)   {self.Net_Power:.3f} kWh")
@@ -330,6 +336,17 @@ class orno:
           self.client.loop(0.10)
  
   def mqtt_prepareTopics(self, type=0):
+    if type == SDM72DV2:
+      self.L1U   = f"{self.mqtt_topic}/L1_Voltage"
+      self.L1P   = f"{self.mqtt_topic}/L1_Power"
+      self.L2U   = f"{self.mqtt_topic}/L2_Voltage"
+      self.L2P   = f"{self.mqtt_topic}/L2_Power"
+      self.L3U   = f"{self.mqtt_topic}/L3_Voltage"
+      self.L3P   = f"{self.mqtt_topic}/L3_Power"
+      self.GF    = f"{self.mqtt_topic}/GridFrequency"
+      self.TP    = f"{self.mqtt_topic}/TotalPower"
+      self.IP    = f"{self.mqtt_topic}/ImportPower"
+      self.EP    = f"{self.mqtt_topic}/ExportPower"
     if type == WE514:
       #self.mqtt_topic = f"{self.mqtt_topic}/WE-514"
       self.L1U  = f"{self.mqtt_topic}/L1_Voltage"
