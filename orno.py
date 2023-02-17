@@ -92,16 +92,15 @@ class orno:
     self.port = port
     self.slave_id = slave_id
     self.polling_interval = 5
-    match type:
-      case self.WE514:
+    if type == self.WE514:
         self.fc=3
-      case self.WE516:
+    elif type == self.WE516:
         self.fc=3
-      case self.WE517:
+    elif type == self.WE517:
         self.fc=3
-      case self.SDM72DV2:
+    elif type == self.SDM72DV2:
         self.fc=4
-      case _:
+    else: 
         self.fc=3
     self.mqtt_actual_connection_try = 0
     self.mqtt_connect_retry_count = 60
