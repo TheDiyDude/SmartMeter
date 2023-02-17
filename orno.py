@@ -433,11 +433,11 @@ class orno:
       if self.client.connected_flag:
         if self.type == SDM72DV2:
           self.client.publish(self.L1U, f"{self.L1_voltage}")
-          self.client.publish(self.L1P, f"{self.L1_power}")
+          self.client.publish(self.L1P, f"{self.L1_APower}")
           self.client.publish(self.L2U, f"{self.L2_voltage}")
-          self.client.publish(self.L2P, f"{self.L2_power}")
+          self.client.publish(self.L2P, f"{self.L2_APower}")
           self.client.publish(self.L3U, f"{self.L3_voltage}")
-          self.client.publish(self.L3P, f"{self.L3_power}")
+          self.client.publish(self.L3P, f"{self.L3_APower}")
           self.client.publish(self.GF,  f"{self.GridFrequency}")
           self.client.publish(self.TP,  f"{self.Net_Power}")
           self.client.publish(self.IP,  f"{self.Total_Import_Active_Power}")
