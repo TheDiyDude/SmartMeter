@@ -24,58 +24,64 @@ from datetime import datetime
 WE514            = 0
 WE516            = 1
 WE517            = 1
+SDM72DV2         = 2                                      # FC=04, Digits=2, Type=float
 
-TotalPower                    = 0xA001,-1
-L1_Voltage                    = 0x131,0x0E
-L2_Voltage                    = 0x131,0x10
-L3_Voltage                    = 0x131,0x12
-L1_Frequency                  = 0x130,0x14
-L2_Frequency                  = 0x130,0x14
-L3_Frequency                  = 0x130,0x14
-L1_Current                    = 0x13A,0x16
-L2_Current                    = 0x13A,0x18
-L3_Current                    = 0x13A,0x1A
-Total_ActivePower             = -1,0x1C
-L1_ActivePower                = 0x141,0x1E
-L2_ActivePower                = 0x141,0x20
-L3_ActivePower                = 0x141,0x22
-Total_ReactivePower           = -1,0x24
-L1_ReactivePower              = 0x149,0x26
-L2_ReactivePower              = 0x149,0x28
-L3_ReactivePower              = 0x149,0x2A
-Total_ApparentPower           = -1,0x2C
-L1_ApparentPower              = 0x151,0x2E
-L2_ApparentPower              = 0x151,0x30
-L3_ApparentPower              = 0x151,0x32
-Total_PF                      = -1,0x34
-L1_PF                         = 0x158,0x36
-L2_PF                         = 0x158,0x38
-L3_PF                         = 0x158,0x3A
-Total_ActiveEnergy            = -1,0x0100
-L1_ActiveEnergy               = -1,0x0102
-L2_ActiveEnergy               = -1,0x0104
-L3_ActiveEnergy               = -1,0x0106
-Total_ForwardActiveEnergy     = -1,0x0108
-L1_ForwardActiveEnergy        = -1,0x010A
-L2_ForwardActiveEnergy        = -1,0x010C
-L3_ForwardActiveEnergy        = -1,0x010E
-Total_ReverseActiveEnergy     = -1,0x0110
-L1_ReverseActiveEnergy        = -1,0x0112
-L2_ReverseActiveEnergy        = -1,0x0114
-L3_ReverseActiveEnergy        = -1,0x0116
-T1_TotalActiveEnergy          = -1,0x0130
-T1_ForwardActiveEnergy        = -1,0x0132
-T1_ReverseActiveEnergy        = -1,0x0134
-T2_TotalActiveEnergy          = -1,0x013C
-T2_ForwardActiveEnergy        = -1,0x013E
-T2_ReverseActiveEnergy        = -1,0x0140
-T3_TotalActiveEnergy          = -1,0x0148
-T3_ForwardActiveEnergy        = -1,0x014A
-T3_ReverseActiveEnergy        = -1,0x014C
-T4_TotalActiveEnergy          = -1,0x0154
-T4_ForwardActiveEnergy        = -1,0x0156
-T4_ReverseActiveEnergy        = -1,0x0158
-GridFrequency                 = 0x130,0x14
+TotalPower                    = 0xA001,   -1,0x0034
+Total_Voltage                 =     -1,   -1,0x0038
+L1_Voltage                    = 0x131,0x000E,0x0000
+L2_Voltage                    = 0x131,0x0010,0x0002
+L3_Voltage                    = 0x131,0x0012,0x0004
+L1_Frequency                  = 0x130,0x0014,0x0046
+L2_Frequency                  = 0x130,0x0014,0x0046
+L3_Frequency                  = 0x130,0x0014,0x0046
+Total_Current                 =    -1,    -1,0x0030
+L1_Current                    = 0x13A,0x0016,0x0006
+L2_Current                    = 0x13A,0x0018,0x0008
+L3_Current                    = 0x13A,0x001A,0x000A
+Total_ActivePower             =    -1,0x001C,    -1
+L1_ActivePower                = 0x141,0x001E,0x000C
+L2_ActivePower                = 0x141,0x0020,0x000E
+L3_ActivePower                = 0x141,0x0022,0x0010
+Total_ReactivePower           =    -1,0x0024,0x0158
+L1_ReactivePower              = 0x149,0x0026,0x0018
+L2_ReactivePower              = 0x149,0x0028,0x001A
+L3_ReactivePower              = 0x149,0x002A,0x001C
+Total_ApparentPower           =    -1,0x002C,    -1
+L1_ApparentPower              = 0x151,0x002E,0x0012
+L2_ApparentPower              = 0x151,0x0030,0x0014
+L3_ApparentPower              = 0x151,0x0032,0x0016
+Total_PF                      =    -1,0x0034,0x003E
+L1_PF                         = 0x158,0x0036,0x001E      # SDM72D: Positive refers to forward current, negative refers to reverse current.
+L2_PF                         = 0x158,0x0038,0x0020      # SDM72D: Positive refers to forward current, negative refers to reverse current.
+L3_PF                         = 0x158,0x003A,0x0022      # SDM72D: Positive refers to forward current, negative refers to reverse current.
+Total_ActiveEnergy            =    -1,0x0100,0x0156      # SDM72D: Total active energy equals to import + export
+L1_ActiveEnergy               =    -1,0x0102,    -1
+L2_ActiveEnergy               =    -1,0x0104,    -1
+L3_ActiveEnergy               =    -1,0x0106,    -1
+Total_ForwardActiveEnergy     =    -1,0x0108,0x0048
+L1_ForwardActiveEnergy        =    -1,0x010A,    -1
+L2_ForwardActiveEnergy        =    -1,0x010C,    -1
+L3_ForwardActiveEnergy        =    -1,0x010E,    -1
+Total_ReverseActiveEnergy     =    -1,0x0110,0x004A
+L1_ReverseActiveEnergy        =    -1,0x0112,    -1
+L2_ReverseActiveEnergy        =    -1,0x0114,    -1
+L3_ReverseActiveEnergy        =    -1,0x0116,    -1
+T1_TotalActiveEnergy          =    -1,0x0130,    -1
+T1_ForwardActiveEnergy        =    -1,0x0132,    -1
+T1_ReverseActiveEnergy        =    -1,0x0134,    -1
+T2_TotalActiveEnergy          =    -1,0x013C,    -1
+T2_ForwardActiveEnergy        =    -1,0x013E,    -1
+T2_ReverseActiveEnergy        =    -1,0x0140,    -1
+T3_TotalActiveEnergy          =    -1,0x0148,    -1
+T3_ForwardActiveEnergy        =    -1,0x014A,    -1
+T3_ReverseActiveEnergy        =    -1,0x014C,    -1
+T4_TotalActiveEnergy          =    -1,0x0154,    -1
+T4_ForwardActiveEnergy        =    -1,0x0156,    -1
+T4_ReverseActiveEnergy        =    -1,0x0158,    -1
+GridFrequency                 = 0x130,0x0014,0x0046
+Net_Power                     =    -1,    -1,0x018C             # Import-Export
+Total_Import_Active_Power     =    -1,    -1,0x0500
+Total_Export_Active_Power     =    -1,    -1,0x0502
 class orno:
   def __init__(self, port, slave_id=1, useMQTT=False, debug=False, log=True, logFile="", type=0):
     self.debug = debug
@@ -86,6 +92,17 @@ class orno:
     self.port = port
     self.slave_id = slave_id
     self.polling_interval = 5
+    match type:
+      case self.WE514:
+        self.fc=3
+      case self.WE516:
+        self.fc=3
+      case self.WE517:
+        self.fc=3
+      case self.SDM72DV2:
+        self.fc=4
+      case _:
+        self.fc=3
     self.mqtt_actual_connection_try = 0
     self.mqtt_connect_retry_count = 60
     self.mqtt_connect_sleep_time  = 320
@@ -129,86 +146,94 @@ class orno:
         print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
   def query(self, register=0, decimals=2):
-    if register == 0 and self.type == 0:
-      self.L1_frequency = self.smartmeter.read_register(L1_Frequency[self.type],2,3)
-      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,3)
-      self.L1_current   = self.smartmeter.read_register(L1_Current[self.type],3,3)
+    if register == 0 and self.type == self.WE514:
+      self.L1_frequency = self.smartmeter.read_register(L1_Frequency[self.type],2,self.fc)
+      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,self.fc)
+      self.L1_current   = self.smartmeter.read_register(L1_Current[self.type],3,self.fc)
       self.L1_power     = self.L1_voltage * self.L1_current
-      self.L1_PF        = self.smartmeter.read_register(L1_PF[self.type],3,3)
-      self.TotalPower   = self.smartmeter.read_register(TotalPower[self.type],2,3)
-      self.L1_APower    = self.smartmeter.read_register(L1_ActivePower[self.type],3,3)
-      self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower[self.type],3,3)
-      self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower[self.type],3,3)
-    elif register == 0 and self.type == 1:
-      self.L1_frequency = self.read_float(L1_Frequency[self.type],2)
-      self.L1_voltage   = self.read_float(L1_Voltage[self.type],2)
-      self.L1_current   = self.read_float(L1_Current[self.type],2)
+      self.L1_PF        = self.smartmeter.read_register(L1_PF[self.type],3,self.fc)
+      self.TotalPower   = self.smartmeter.read_register(TotalPower[self.type],2,self.fc)
+      self.L1_APower    = self.smartmeter.read_register(L1_ActivePower[self.type],3,self.fc)
+      self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower[self.type],3,self.fc)
+      self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower[self.type],3,self.fc)
+    elif register == 0 and self.type == self.WE517:
+      self.L1_frequency = self.read_float(L1_Frequency[self.type],2,self.fc)
+      self.L1_voltage   = self.read_float(L1_Voltage[self.type],2,self.fc)
+      self.L1_current   = self.read_float(L1_Current[self.type],2,self.fc)
       self.L1_power     = self.L1_voltage * self.L1_current
-      self.L1_PF        = self.read_float(L1_PF[self.type],2)
-      self.L1_APower    = self.read_float(L1_ActivePower[self.type],2)
-      self.L1_RPower    = self.read_float(L1_ReactivePower[self.type],2)
-      self.L1_ApPower   = self.read_float(L1_ApparentPower[self.type],2)
-      self.L1_AEnergy   = self.read_float(L1_ActiveEnergy[self.type],2)
-      self.L1_FAEnergy  = self.read_float(L1_ForwardActiveEnergy[self.type],2)
-      self.L1_RAEnergy  = self.read_float(L1_ReverseActiveEnergy[self.type],2)
-      self.L2_frequency = self.read_float(L1_Frequency[self.type],2)
-      self.L2_voltage   = self.read_float(L2_Voltage[self.type],2)
-      self.L2_current   = self.read_float(L2_Current[self.type],2)
+      self.L1_PF        = self.read_float(L1_PF[self.type],2,self.fc)
+      self.L1_APower    = self.read_float(L1_ActivePower[self.type],2,self.fc)
+      self.L1_RPower    = self.read_float(L1_ReactivePower[self.type],2,self.fc)
+      self.L1_ApPower   = self.read_float(L1_ApparentPower[self.type],2,self.fc)
+      self.L1_AEnergy   = self.read_float(L1_ActiveEnergy[self.type],2,self.fc)
+      self.L1_FAEnergy  = self.read_float(L1_ForwardActiveEnergy[self.type],2,self.fc)
+      self.L1_RAEnergy  = self.read_float(L1_ReverseActiveEnergy[self.type],2,self.fc)
+      self.L2_frequency = self.read_float(L1_Frequency[self.type],2,self.fc)
+      self.L2_voltage   = self.read_float(L2_Voltage[self.type],2,self.fc)
+      self.L2_current   = self.read_float(L2_Current[self.type],2,self.fc)
       self.L2_power     = self.L2_voltage * self.L2_current
-      self.L2_PF        = self.read_float(L2_PF[self.type],2)
-      self.L2_APower    = self.read_float(L2_ActivePower[self.type],2)
-      self.L2_RPower    = self.read_float(L2_ReactivePower[self.type],2)
-      self.L2_ApPower   = self.read_float(L2_ApparentPower[self.type],2)
-      self.L2_AEnergy   = self.read_float(L2_ActiveEnergy[self.type],2)
-      self.L2_FAEnergy  = self.read_float(L2_ForwardActiveEnergy[self.type],2)
-      self.L2_RAEnergy  = self.read_float(L2_ReverseActiveEnergy[self.type],2)
-      self.L3_frequency = self.read_float(L3_Frequency[self.type],2)
-      self.L3_voltage   = self.read_float(L3_Voltage[self.type],2)
-      self.L3_current   = self.read_float(L3_Current[self.type],2)
+      self.L2_PF        = self.read_float(L2_PF[self.type],2,self.fc)
+      self.L2_APower    = self.read_float(L2_ActivePower[self.type],2,self.fc)
+      self.L2_RPower    = self.read_float(L2_ReactivePower[self.type],2,self.fc)
+      self.L2_ApPower   = self.read_float(L2_ApparentPower[self.type],2,self.fc)
+      self.L2_AEnergy   = self.read_float(L2_ActiveEnergy[self.type],2,self.fc)
+      self.L2_FAEnergy  = self.read_float(L2_ForwardActiveEnergy[self.type],2,self.fc)
+      self.L2_RAEnergy  = self.read_float(L2_ReverseActiveEnergy[self.type],2,self.fc)
+      self.L3_frequency = self.read_float(L3_Frequency[self.type],2,self.fc)
+      self.L3_voltage   = self.read_float(L3_Voltage[self.type],2,self.fc)
+      self.L3_current   = self.read_float(L3_Current[self.type],2,self.fc)
       self.L3_power     = self.L3_voltage * self.L3_current
-      self.L3_PF        = self.read_float(L3_PF[self.type],2)
-      self.L3_APower    = self.read_float(L3_ActivePower[self.type],2)
-      self.L3_RPower    = self.read_float(L3_ReactivePower[self.type],2)
-      self.L3_ApPower   = self.read_float(L3_ApparentPower[self.type],2)
-      self.L3_AEnergy   = self.read_float(L3_ActiveEnergy[self.type],2)
-      self.L3_FAEnergy  = self.read_float(L3_ForwardActiveEnergy[self.type],2)
-      self.L3_RAEnergy  = self.read_float(L3_ReverseActiveEnergy[self.type],2)
-      self.TotalPower   = self.read_float(Total_ActiveEnergy[self.type],2)
-      self.TotalActivePower = self.read_float(Total_ActivePower[self.type],2)
-      self.TotalReactivePower = self.read_float(Total_ReactivePower[self.type],2)
-      self.TotalApparentPower = self.read_float(Total_ApparentPower[self.type],2)
-      self.TotalPF            = self.read_float(Total_PF[self.type],2)
-      self.TotalActiveEnergy  = self.read_float(Total_ActiveEnergy[self.type],2)
-      self.TotalForwardActiveEnergy = self.read_float(Total_ForwardActiveEnergy[self.type],2)
-      self.TotalReverseActiveEnergy = self.read_float(Total_ReverseActiveEnergy[self.type],2)
-      self.T1_TotalActiveEnergy     = self.read_float(T1_TotalActiveEnergy[self.type],2)
-      self.T1_ForwardActiveEnergy   = self.read_float(T1_ForwardActiveEnergy[self.type],2)
-      self.T1_ReverseActiveEnergy   = self.read_float(T1_ReverseActiveEnergy[self.type],2)
-      self.T2_TotalActiveEnergy     = self.read_float(T2_TotalActiveEnergy[self.type],2)
-      self.T2_ForwardActiveEnergy   = self.read_float(T2_ForwardActiveEnergy[self.type],2)
-      self.T2_ReverseActiveEnergy   = self.read_float(T2_ReverseActiveEnergy[self.type],2)
-      self.T3_TotalActiveEnergy     = self.read_float(T3_TotalActiveEnergy[self.type],2)
-      self.T3_ForwardActiveEnergy   = self.read_float(T3_ForwardActiveEnergy[self.type],2)
-      self.T3_ReverseActiveEnergy   = self.read_float(T3_ReverseActiveEnergy[self.type],2)
-      self.T4_TotalActiveEnergy     = self.read_float(T4_TotalActiveEnergy[self.type],2)
-      self.T4_ForwardActiveEnergy   = self.read_float(T4_ForwardActiveEnergy[self.type],2)
-      self.T4_ReverseActiveEnergy   = self.read_float(T4_ReverseActiveEnergy[self.type],2)
-    elif register == -1 and self.type == 0:
-      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,3)
-      self.L1_current   = self.smartmeter.read_register(L1_Current[self.type],3,3)
+      self.L3_PF        = self.read_float(L3_PF[self.type],2,self.fc)
+      self.L3_APower    = self.read_float(L3_ActivePower[self.type],2,self.fc)
+      self.L3_RPower    = self.read_float(L3_ReactivePower[self.type],2,self.fc)
+      self.L3_ApPower   = self.read_float(L3_ApparentPower[self.type],2,self.fc)
+      self.L3_AEnergy   = self.read_float(L3_ActiveEnergy[self.type],2,self.fc)
+      self.L3_FAEnergy  = self.read_float(L3_ForwardActiveEnergy[self.type],2,self.fc)
+      self.L3_RAEnergy  = self.read_float(L3_ReverseActiveEnergy[self.type],2,self.fc)
+      self.TotalPower   = self.read_float(Total_ActiveEnergy[self.type],2,self.fc)
+      self.TotalActivePower = self.read_float(Total_ActivePower[self.type],2,self.fc)
+      self.TotalReactivePower = self.read_float(Total_ReactivePower[self.type],2,self.fc)
+      self.TotalApparentPower = self.read_float(Total_ApparentPower[self.type],2,self.fc)
+      self.TotalPF            = self.read_float(Total_PF[self.type],2,self.fc)
+      self.TotalActiveEnergy  = self.read_float(Total_ActiveEnergy[self.type],2,self.fc)
+      self.TotalForwardActiveEnergy = self.read_float(Total_ForwardActiveEnergy[self.type],2,self.fc)
+      self.TotalReverseActiveEnergy = self.read_float(Total_ReverseActiveEnergy[self.type],2,self.fc)
+      self.T1_TotalActiveEnergy     = self.read_float(T1_TotalActiveEnergy[self.type],2,self.fc)
+      self.T1_ForwardActiveEnergy   = self.read_float(T1_ForwardActiveEnergy[self.type],2,self.fc)
+      self.T1_ReverseActiveEnergy   = self.read_float(T1_ReverseActiveEnergy[self.type],2,self.fc)
+      self.T2_TotalActiveEnergy     = self.read_float(T2_TotalActiveEnergy[self.type],2,self.fc)
+      self.T2_ForwardActiveEnergy   = self.read_float(T2_ForwardActiveEnergy[self.type],2,self.fc)
+      self.T2_ReverseActiveEnergy   = self.read_float(T2_ReverseActiveEnergy[self.type],2,self.fc)
+      self.T3_TotalActiveEnergy     = self.read_float(T3_TotalActiveEnergy[self.type],2,self.fc)
+      self.T3_ForwardActiveEnergy   = self.read_float(T3_ForwardActiveEnergy[self.type],2,self.fc)
+      self.T3_ReverseActiveEnergy   = self.read_float(T3_ReverseActiveEnergy[self.type],2,self.fc)
+      self.T4_TotalActiveEnergy     = self.read_float(T4_TotalActiveEnergy[self.type],2,self.fc)
+      self.T4_ForwardActiveEnergy   = self.read_float(T4_ForwardActiveEnergy[self.type],2,self.fc)
+      self.T4_ReverseActiveEnergy   = self.read_float(T4_ReverseActiveEnergy[self.type],2,self.fc)
+    elif register == -1 and self.type == self.WE514:
+      self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,self.fc)
+      self.L1_current   = self.smartmeter.read_register(L1_Current[self.type],3,self.fc)
       self.L1_power     = self.L1_voltage * self.L1_current
       return self.L1_power
     else:
       if self.type == 0:
-        return self.smartmeter.read_register(register,decimals,3)
+        return self.smartmeter.read_register(register,decimals,self.fc)
       elif self.type == 1:
-        return self.read_float(register,decimals)
+        return self.read_float(register,decimals,self.fc)
 
   def read_float(self, register=0, num=2, code=3, order=0):
       return self.smartmeter.read_float(register,code,num,order)
   
   def print(self):
-    if self.type == 0:
+    if self.type == self.SDM72DV2:
+      print(f"L1 Power (Active)           {self.L1_APower:.3f} W")
+      print(f"L2 Power (Active)           {self.L2_APower:.3f} W")
+      print(f"L3 Power (Active)           {self.L3_APower:.3f} W")
+      print(f"Frequency                   {self.L1_frequency:.2f} Hz")
+      print(f"Net kWh (Import - Export)   {self.TotalActivePower:.2f} kWh")
+      print(f"Total Import Power (Active) {self.TotalForwardActiveEnergy:.2f} kWh")
+      print(f"Total Export Power (Active) {self.TotalReverseActiveEnergy:.2f} kWh")
+    if self.type == self.WE514:
       print(f"L1 Voltage                  {self.L1_voltage:.0f} V")
       print(f"L1 Frequency                {self.L1_frequency:.2f} Hz")
       print(f"L1 Current                  {self.L1_current:.3f} A")
@@ -218,7 +243,7 @@ class orno:
       print(f"L1 Apparent Power           {self.L1_ApPower:.3f} kva")
       print(f"L1 Power Factor             {self.L1_PF:.2f}")
       print(f"Total Power                 {self.TotalPower:.2f} kWh")
-    elif self.type == 1:
+    elif self.type == self.WE517:
       print(f"L1 Voltage                  {self.L1_voltage:.0f} V")
       print(f"L1 Frequency                {self.L1_frequency:.2f} Hz")
       print(f"L1 Current                  {self.L1_current:.3f} A")
@@ -295,7 +320,7 @@ class orno:
           self.client.loop(0.10)
  
   def mqtt_prepareTopics(self, type=0):
-    if type == 0:
+    if type == self.WE514:
       #self.mqtt_topic = f"{self.mqtt_topic}/WE-514"
       self.L1U  = f"{self.mqtt_topic}/L1_Voltage"
       self.L1F  = f"{self.mqtt_topic}/L1_Frequency"
@@ -306,7 +331,7 @@ class orno:
       self.L1ApP= f"{self.mqtt_topic}/L1_ApparentPower"
       self.L1PF = f"{self.mqtt_topic}/L1_PF"
       self.TP   = f"{self.mqtt_topic}/TotalPower"
-    if type == 1:
+    if type == self.WE517:
       #self.mqtt_topic = f"{self.mqtt_topic}/WE-517"
       self.L1U   = f"{self.mqtt_topic}/L1_Voltage"
       self.L1F   = f"{self.mqtt_topic}/L1_Frequency"
@@ -379,7 +404,7 @@ class orno:
   def mqtt_publish(self):
     try:
       if self.client.connected_flag:
-        if self.type == 0:
+        if self.type == self.WE514:
           self.client.publish(self.L1U, f"{self.L1_voltage}")
           self.client.publish(self.L1F, f"{self.L1_frequency}")
           self.client.publish(self.L1I, f"{self.L1_current}")
@@ -389,7 +414,7 @@ class orno:
           self.client.publish(self.L1ApP, f"{self.L1_ApPower}")
           self.client.publish(self.L1PF, f"{self.L1_PF}")
           self.client.publish(self.TP, f"{self.TotalPower}")
-        if self.type == 1:
+        if self.type == self.WE517:
           self.client.publish(self.L1U, f"{self.L1_voltage}")
           self.client.publish(self.L1F, f"{self.L1_frequency}")  
           self.client.publish(self.L1I, f"{self.L1_current}")   
