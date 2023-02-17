@@ -145,7 +145,7 @@ class orno:
         print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
   def query(self, register=0, decimals=2):
-    if register == 0 and self.type == self.WE514:
+    if register == 0 and self.type == WE514:
       self.L1_frequency = self.smartmeter.read_register(L1_Frequency[self.type],2,self.fc)
       self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,self.fc)
       self.L1_current   = self.smartmeter.read_register(L1_Current[self.type],3,self.fc)
@@ -155,7 +155,7 @@ class orno:
       self.L1_APower    = self.smartmeter.read_register(L1_ActivePower[self.type],3,self.fc)
       self.L1_RPower    = self.smartmeter.read_register(L1_ReactivePower[self.type],3,self.fc)
       self.L1_ApPower   = self.smartmeter.read_register(L1_ApparentPower[self.type],3,self.fc)
-    elif register == 0 and self.type == self.WE517:
+    elif register == 0 and self.type == WE517:
       self.L1_frequency = self.read_float(L1_Frequency[self.type],2,self.fc)
       self.L1_voltage   = self.read_float(L1_Voltage[self.type],2,self.fc)
       self.L1_current   = self.read_float(L1_Current[self.type],2,self.fc)
@@ -224,7 +224,7 @@ class orno:
       return self.smartmeter.read_float(register,code,num,order)
   
   def print(self):
-    if self.type == self.SDM72DV2:
+    if self.type == SDM72DV2:
       print(f"L1 Power (Active)           {self.L1_APower:.3f} W")
       print(f"L2 Power (Active)           {self.L2_APower:.3f} W")
       print(f"L3 Power (Active)           {self.L3_APower:.3f} W")
@@ -232,7 +232,7 @@ class orno:
       print(f"Net kWh (Import - Export)   {self.TotalActivePower:.2f} kWh")
       print(f"Total Import Power (Active) {self.TotalForwardActiveEnergy:.2f} kWh")
       print(f"Total Export Power (Active) {self.TotalReverseActiveEnergy:.2f} kWh")
-    if self.type == self.WE514:
+    if self.type == WE514:
       print(f"L1 Voltage                  {self.L1_voltage:.0f} V")
       print(f"L1 Frequency                {self.L1_frequency:.2f} Hz")
       print(f"L1 Current                  {self.L1_current:.3f} A")
@@ -319,7 +319,7 @@ class orno:
           self.client.loop(0.10)
  
   def mqtt_prepareTopics(self, type=0):
-    if type == self.WE514:
+    if type == WE514:
       #self.mqtt_topic = f"{self.mqtt_topic}/WE-514"
       self.L1U  = f"{self.mqtt_topic}/L1_Voltage"
       self.L1F  = f"{self.mqtt_topic}/L1_Frequency"
@@ -330,7 +330,7 @@ class orno:
       self.L1ApP= f"{self.mqtt_topic}/L1_ApparentPower"
       self.L1PF = f"{self.mqtt_topic}/L1_PF"
       self.TP   = f"{self.mqtt_topic}/TotalPower"
-    if type == self.WE517:
+    if type == WE517:
       #self.mqtt_topic = f"{self.mqtt_topic}/WE-517"
       self.L1U   = f"{self.mqtt_topic}/L1_Voltage"
       self.L1F   = f"{self.mqtt_topic}/L1_Frequency"
@@ -403,7 +403,7 @@ class orno:
   def mqtt_publish(self):
     try:
       if self.client.connected_flag:
-        if self.type == self.WE514:
+        if self.type == WE514:
           self.client.publish(self.L1U, f"{self.L1_voltage}")
           self.client.publish(self.L1F, f"{self.L1_frequency}")
           self.client.publish(self.L1I, f"{self.L1_current}")
@@ -413,7 +413,7 @@ class orno:
           self.client.publish(self.L1ApP, f"{self.L1_ApPower}")
           self.client.publish(self.L1PF, f"{self.L1_PF}")
           self.client.publish(self.TP, f"{self.TotalPower}")
-        if self.type == self.WE517:
+        if self.type == WE517:
           self.client.publish(self.L1U, f"{self.L1_voltage}")
           self.client.publish(self.L1F, f"{self.L1_frequency}")  
           self.client.publish(self.L1I, f"{self.L1_current}")   
