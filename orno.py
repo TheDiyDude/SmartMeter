@@ -152,7 +152,7 @@ class orno:
       self.L1_APower = self.smartmeter.read_register(L1_ActivePower[self.type],4,self.fc)
       self.L2_APower = self.smartmeter.read_register(L2_ActivePower[self.type],4,self.fc)
       self.L3_APower = self.smartmeter.read_register(L3_ActivePower[self.type],4,self.fc)
-      self.L1_frequency = self.smartmeter.read_register(L1_Frequency[self.type],4,self.fc)
+      self.L1_frequency = self.read_float(L1_Frequency[self.type],2,self.fc)
       print(f"F: {self.L1_frequency}")
       self.TotalActivePower = self.smartmeter.read_register(L1_ActivePower[self.type],4,self.fc)
       self.TotalForwardActiveEnergy = self.smartmeter.read_register(Total_ForwardActiveEnergy[self.type],4,self.fc)
