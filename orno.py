@@ -92,13 +92,13 @@ class orno:
     self.port = port
     self.slave_id = slave_id
     self.polling_interval = 5
-    if type == self.WE514:
+    if type == WE514:
         self.fc=3
-    elif type == self.WE516:
+    elif type == WE516:
         self.fc=3
-    elif type == self.WE517:
+    elif type == WE517:
         self.fc=3
-    elif type == self.SDM72DV2:
+    elif type == SDM72DV2:
         self.fc=4
     else: 
         self.fc=3
