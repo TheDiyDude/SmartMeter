@@ -449,7 +449,7 @@ class orno:
         self.mqtt_actual_connection_try = self.mqtt_actual_connection_try + 1
         if self.mqtt_actual_connection_try < self.mqtt_connect_retry_count:
           self.client.loop(0.01)
-          t.sleep(1)
+          t.sleep(10)
           self.logMessage(f"mqtt_publish(): Error - retry {self.mqtt_actual_connection_try}")
           self.mqtt_publish()
         else:
@@ -466,7 +466,7 @@ class orno:
     if rc != 0:
      self.logMessage(f"mqtt_onDisconnect: Verbindung verloren!")
      client.connected_flag=False
-     #self.mqtt=self.mqtt_connect()
+     t.sleep(30)
      self.client.reconnect()
 
   def mqtt_on_connect(self, client, userdata, flags, rc):
@@ -493,7 +493,7 @@ class orno:
     self.client.on_disconnect = self.mqtt_on_disconnect
     try:
       self.client.connect(self.mqtt_broker, self.mqtt_port)
-      self.client.loop(0.01)
+      self.client.loop_start()
     except Exception as err:
         self.logMessage(f"mqtt_connect() ERROR: {err}")
     return self.client
