@@ -253,7 +253,7 @@ class orno:
       print(f"L1 Apparent Power           {self.L1_ApPower:.3f} kva")
       print(f"L1 Power Factor             {self.L1_PF:.2f}")
       print(f"Total Power                 {self.TotalPower:.2f} kWh")
-    elif self.type == self.WE517:
+    elif self.type == WE517:
       print(f"L1 Voltage                  {self.L1_voltage:.0f} V")
       print(f"L1 Frequency                {self.L1_frequency:.2f} Hz")
       print(f"L1 Current                  {self.L1_current:.3f} A")
