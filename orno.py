@@ -145,6 +145,14 @@ class orno:
         print(f"ORNO Error: Cannot log message '{message}:\n{ioError}")
 
   def query(self, register=0, decimals=2):
+    if register == 0 and self.type == SDM72DV2:
+      self.L1_APower = self.smartmeter.read_register(L1_APower[self.type],2,self.fc)
+      self.L2_APower = self.smartmeter.read_register(L2_APower[self.type],2,self.fc)
+      self.L3_APower = self.smartmeter.read_register(L3_APower[self.type],2,self.fc)
+      self.L1_frequency = self.smartmeter.read_register(L1_frequency[self.type],2,self.fc)
+      self.TotalActivePower = self.smartmeter.read_register(TotalActivePower[self.type],2,self.fc)
+      self.TotalForwardActiveEnergy = self.smartmeter.read_register(TotalForwardActiveEnergy[self.type],2,self.fc)
+      self.TotalReverseActiveEnergy = self.smartmeter.read_register(TotalReverseActiveEnergy[self.type],2,self.fc)  
     if register == 0 and self.type == WE514:
       self.L1_frequency = self.smartmeter.read_register(L1_Frequency[self.type],2,self.fc)
       self.L1_voltage   = self.smartmeter.read_register(L1_Voltage[self.type],2,self.fc)
