@@ -431,6 +431,17 @@ class orno:
   def mqtt_publish(self):
     try:
       if self.client.connected_flag:
+        if self.type == SDM72DV2:
+          self.client.publish(self.L1U, f"{self.L1_voltage}")
+          self.client.publish(self.L1P, f"{self.L1_power}")
+          self.client.publish(self.L2U, f"{self.L2_voltage}")
+          self.client.publish(self.L2P, f"{self.L2_power}")
+          self.client.publish(self.L3U, f"{self.L3_voltage}")
+          self.client.publish(self.L3P, f"{self.L3_power}")
+          self.client.publish(self.GF, f"{self.GridFrequency}")
+          self.client.publish(self.TP, f"{self.Net_Power}")
+          self.client.publish(self.IP, f"{self.Total_Import_Active_Power}")
+          self.client.publish(self.EP, f"{self.Total_Export_Active_Power}") 
         if self.type == WE514:
           self.client.publish(self.L1U, f"{self.L1_voltage}")
           self.client.publish(self.L1F, f"{self.L1_frequency}")
