@@ -6,6 +6,8 @@
 #
 # Current support:
 #  Single Phase Meter OR-WE-514
+#  Three Phase Meter  OR-WE-517
+#                     SDM72D Modbus V2
 #
 # Author: Marc-Oliver Blumenauer 
 #         marc@l3c.de
@@ -508,18 +510,20 @@ class orno:
           self.client.publish(self.T4TRAE, f"{self.T4_ReverseActiveEnergy}")
       else:
         self.logMessage(f"Publish Error: no connection")
-        self.client.loop(0.01)
+        #self.client.loop(0.01)
         self.mqtt_actual_connection_try = self.mqtt_actual_connection_try + 1
         if self.mqtt_actual_connection_try < self.mqtt_connect_retry_count:
-          self.client.loop(0.01)
-          t.sleep(10)
+          #self.client.loop(0.01)
+          t.sleep(30)
           self.logMessage(f"mqtt_publish(): Error - retry {self.mqtt_actual_connection_try}")
           self.mqtt_publish()
         else:
-          raise
+          self.logMessage(f"mqtt_publish(): Error - No more retries!")
     except Exception as err:
         self.logMessage(f"mqtt_publish() ERROR: {err}")
-        #self.mqtt_enable()
+        self.logMessage(f"mqtt_publish() Restart in 60 seconds.")
+        t.sleep(60)
+        self.mqtt_enable()
         #self.client.loop(0.01)
 
   def mqtt_on_disconnect(self, client, userdata, flags, rc=0):
@@ -527,6 +531,7 @@ class orno:
     if rc == 0:
      self.client.reconnect()
     if rc != 0:
+     self.client.loop_stop()
      self.logMessage(f"mqtt_onDisconnect: Verbindung verloren!")
      client.connected_flag=False
      t.sleep(30)
@@ -537,9 +542,11 @@ class orno:
       self.logMessage("ORNO/MQTT: Connected to MQTT Broker!")
       client.connected_flag=True
       self.mqtt_actual_connection_try = 0
+      self.client.loop_start()
     else:
       self.logMessage("ORNO/MQTT: Failed to connect, return code %d\n", rc)
       client.bad_connection_flag=True
+      self.client.loop_stop()
   
   def mqtt_on_log(self, client, userdata, level, buf):
       if self.debug:
