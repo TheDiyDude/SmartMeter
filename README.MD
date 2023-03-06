@@ -1,14 +1,17 @@
 
 # ORNO package 
 
-> With the orno python3 class it is very easy to communicate with the ORNO OR-WE-514 meter via RS-485 and ModBus RTU protocol. 
+> With the this python3 class it is very easy to communicate with the ORNO OR-WE-514, 516, 517 or EASTRON SDM72DV2 meter via RS-485 and ModBus RTU protocol. 
 > The intention was to make it very easy. Basically you need the class init with defaults and get going. The defaults should be
 > sufficient to communicate with the device. If you're going to use MQTT a view parameters for authentication and connection have
-> to be set and that's it. 
+> to be set and that's it. See Samples below how to do this.
+>
 >
 > Together with iobroker or similar software you can display the datapoints:
 ![Result](media/iobroker_MQTT_Topic.PNG)
 ![Result](media/HABPanel_SmartMeter1.PNG)
+![Result](media/WE517_Grafana.png)
+![Result](media/WE517_iobroker_objects.png)
 
 > I used a RS-485 modul and build an easy RS-485 hat to my Raspberry Pi 1. 
 >
@@ -20,6 +23,7 @@
 >                   Do not forget to connect one of the two Neutral wires to your grid neutral, otherwise it will not work.
 
 ![Raspberry Pi RS-485 Hat](media/raspPi1_Rs-485_Head.jpg)
+![OR-WE-514](media/Setup.png)
 
 > Required packages
 ```
@@ -32,7 +36,7 @@ pip3 install paho-mqtt
 ```
 
 ### Available methods and parameters
-> instrument = orno.orno(port, slave_id=1, useMQTT=False, log=True)
+> instrument = orno.orno(port, slave_id=1, useMQTT=False, log=True, logFile="", type=orno.WE514)
 ```
 port        Serial Device like COM4 or /dev/ttyUSB0
 
@@ -47,6 +51,15 @@ useMQTT     True or False, if True it is necessary to set MQTT communication par
 
 log         True/False
             Writes out a logfile in current execution folder. Setting degub=True makes it more verbose.
+
+logFile     Specify a custom logFile. The class adds a timestamp between end of
+            filename and extension like mylog-YYYYmmdd.mextension
+
+type        the type of the ORNO device, WE514 (single phase) or WE517 (3 phase)
+            current supported values are:
+              WE514
+              WE516
+              WE517
 
 Other parameters
             debug               True/False, for debug output
@@ -74,6 +87,12 @@ orno.TotalPower
 Sample
 TotalPower = instrument.query(orno.TotalPower,3)
 
+```
+
+> insrument.read_float(address,count)
+```
+This method will read float values from the slave. Count is the number of floats or width given on documentation.
+Usually it is two.
 ```
 
 > instrument.print()
@@ -187,15 +206,42 @@ print(f"L1 Reactive Power: {RPower} kvar")
 print(f"L1 Apparent Power: {ApPower} kva")
 print(f"Total Power      : {SumPower} kWh")
 ```
-> Result
+![Result](media/CustomRegistersAndLogging.png)
+
+> Sample to scan for registers on a device to discover values to use
 ```
-L1 Voltage       : 228.27 V
-L1 Power         : 6.8481 W
-L1 Active Power  : 0 kW
-L1 Reactive Power: 0.007 kvar
-L1 Apparent Power: 0.007 kva
-Total Power      : 0.023 kWh
-```
+import orno
+import time as t
+from datetime import datetime
+import sys
+
+if len(sys.argv) == 1:
+  print(f"Usage: {sys.argv[0]} StartAddress EndAddress\nusing default address range 0x0000 to 0x0360\n")
+
+if len(sys.argv) < 2:
+  addr  = int("0x0000",16)
+  end   = int("0x0360",16)
+else:
+  addr  = int(sys.argv[1],16)
+  end   = int(sys.argv[2],16)
+
+instrument=orno.orno('/dev/ttyUSB0',type=orno.WE517)
+
+print(f"Scanning SLAVE ID 1: from address {addr} to address {end}")
+
+while addr <= end:
+  try:
+    time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    print(f"{time} -- Address 0x{addr:04x}: {instrument.query(addr,2)}")  
+  except Exception as ex:
+    #print(f"Addr {addr}: error")
+    err = ex
+  t.sleep(0.01)  
+  addr = addr + 1
+````
+![Result](media/scan.png)
+
+
 
 >
 > Author: Marc-Oliver Blumenauer 

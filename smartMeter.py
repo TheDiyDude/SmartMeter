@@ -17,7 +17,7 @@
 #
 import orno
 
-instrument=orno.orno('/dev/ttyAMA0',useMQTT=True)
+instrument=orno.orno('/dev/ttyAMA0', useMQTT=True, logFile="smartMeter_venus.log", type=orno.WE514)
 
 instrument.mqtt_broker       = 'HOSTNAME'
 instrument.mqtt_port         = 1886
@@ -27,8 +27,9 @@ instrument.mqtt_topic        = 'SmartMeter/ORNO/WE-514'
 instrument.debug             = False
 instrument.polling_interval  = 10
 
+instrument.mqtt_enable()
+
 while True:
-  try:
-    instrument.doLoop()
-  except:
-    instrument.mqtt_enable()
+    instrument.query()
+    instrument.mqtt_publish()
+    time.sleep(instrument.polling_interval)
