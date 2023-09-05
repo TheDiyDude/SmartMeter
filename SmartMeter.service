@@ -1,0 +1,18 @@
+# ensure to keep the path/location to the smartMeter.py file correct - see below!
+# usually you clone the repo into /home/pi and have there a folder SmartMeter. 
+# copy this file to /etc/systemd/system/SmartMeter.service
+# sudo systemctl enable SmartMeter.service
+# sudo reboot
+#
+[Unit]
+Description=SmartMeter Service
+After=multi-user.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/SmartMeter
+ExecStart=/home/pi/SmartMeter/smartMeter.py
+Restart=always
+
+[Install]
+WantedBy=sysinit.target
