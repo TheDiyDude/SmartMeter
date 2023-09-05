@@ -433,7 +433,7 @@ class orno:
       self.isMQTT_connected = True
     except Exception as err:
         self.logMessage(f"mqtt_enable() ERROR: {err}")
-
+ 
   def mqtt_publish(self):
     try:
       if self.client.connected_flag:
