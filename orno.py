@@ -84,7 +84,7 @@ GridFrequency                 = 0x130,0x0014,0x0046
 Net_Power                     =    -1,    -1,0x018C             # Import-Export
 Total_Import_Active_Power     =    -1,    -1,0x0500
 Total_Export_Active_Power     =    -1,    -1,0x0502
-Total_Export_Power            =    -1,    -1,0x7A33
+Total_Export_Power            =    -1,    -1,0x004A
 class orno:
   def __init__(self, port, slave_id=1, useMQTT=False, debug=False, log=True, logFile="", type=0):
     self.debug = debug
